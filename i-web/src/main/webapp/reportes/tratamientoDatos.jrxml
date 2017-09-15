@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="variosCertificados" language="groovy" pageWidth="612" pageHeight="792" whenNoDataType="NoDataSection" columnWidth="556" leftMargin="28" rightMargin="28" topMargin="28" bottomMargin="28">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="pNombre" class="java.lang.String"/>
+	<parameter name="pLogo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pDocumento" class="java.lang.String"/>
+	<parameter name="pFechas" class="java.lang.String"/>
+	<parameter name="pCurso" class="java.lang.String"/>
+	<parameter name="pLeyenda" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\workspace\\web\\WebContent\\reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="tipoDocumento" class="java.lang.String"/>
+	<field name="tipoCertificado" class="java.lang.String"/>
+	<field name="fechaFin" class="java.lang.String"/>
+	<field name="fechaDisponibilidad" class="java.lang.String"/>
+	<field name="id" class="java.lang.Integer"/>
+	<title>
+		<band height="417">
+			<staticText>
+				<reportElement x="0" y="1" width="556" height="411"/>
+				<textElement textAlignment="Justified" markup="html">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[<center><b>AUTORIZACION PARA EL TRATAMIENTO DE DATOS PERSONALES</b><br/><br/>
+YO MANIFIESTO QUE HE SIDO INFORMADO (A) POR <b>MULTIEMERGENCIAS S.A.S </b> DE LO SIGUIENTE:</center>
+<br/><br/>1. MULTIEMERGENCIAS S.A.S. RECOLECTARÁ, USARÁ Y TRATARA DATOS PERSONALES, CONFORME LA POLÍTICA DE TRATAMIENTO DE DATOS PERSONALES QUE HA IMPLEMENTADO Y ACTUARÁ COMO RESPONSABLE DEL TRATAMIENTO DE DATOS PERSONALES DE LOS CUALES SOY TITULAR.
+
+<br/><br/>2. LOS DATOS PERSONALES QUE SE UTILIZARÁN SON: NOMBRES Y APELLIDOS, DOCUMENTO DE IDENTIDAD, DIRECCIÓN DE CORREO ELECTRÓNICO.
+
+<br/><br/>3. LOS DATOS PERSONALES RECOGIDOS SE UTILIZAN CON EL PROPÓSITO DE (I) GENERAR CERTIFICACIONES DE LOS CURSOS/DIPLOMADOS/CAPACITACIONES SOBRE LOS CUALES SE HA CAPACITADO. (II)INFORMAR SOBRE NUESTRAS PROMOCIONES, OFERTAS, NOVEDADES Y SERVICIOS SOBRE LOS DISTINTOS CURSOS; (III) DAR CUMPLIMIENTO A OBLIGACIONES CONTRAÍDAS CON NUESTROS CLIENTES (IV) EVALUAR LA CALIDAD DEL SERVICIO (VII) GESTIONAR TAREAS BÁSICAS DE ADMINISTRACIÓN.
+
+<br/><br/>4. MIS DERECHOS COMO TITULAR DE LOS DATOS SON LOS PREVISTOS EN LA CONSTITUCIÓN Y LA LEY 1581 DE 2012, ESPECIALMENTE EL DERECHO A CONOCER, ACTUALIZAR, RECTIFICAR Y SUPRIMIR MI INFORMACIÓN PERSONAL, ASÍ COMO EL DERECHO A REVOCAR EL CONSENTIMIENTO OTORGADO PARA EL TRATAMIENTO DE DATOS PERSONALES. LOS DERECHOS PUEDEN SER EJERCIDOS A TRAVÉS DE CANALES COMO LÍNEAS TELEFÓNICAS, CORREO ELECTRÓNICO, PÁGINA WEB, REDES SOCIALES.
+
+<br/><br/>5. MULTIEMERGENCIAS S.A.S. GARANTIZA LA CONFIDENCIALIDAD, LIBERTAD, SEGURIDAD, VERACIDAD, TRANSPARENCIA, ACCESO Y CIRCULACIÓN RESTRINGIDA DE LOS DATOS SUMINISTRADOS.
+
+<br/>TENIENDO EN CUENTA LO ANTERIOR,  LAS SIGUIENTES PERSONAS DE MANERA VOLUNTARIA, PREVIA, EXPLÍCITA, INFORMADA E INEQUÍVOCA AUTORIZAN A MULTIEMERGENCIAS S.A.S. PARA TRATAR LOS  DATOS PERSONALES. LA INFORMACIÓN OBTENIDA PARA EL TRATAMIENTO DE LOS  DATOS PERSONALES SE HA SUMINISTRADO DE FORMA VOLUNTARIA Y ES VERÍDICA.
+
+<br/><br/>
+EN CONSTANCIA FIRMAN:
+
+
+
+
+
+
+]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="40">
+			<line>
+				<reportElement x="0" y="5" width="556" height="1"/>
+			</line>
+			<line>
+				<reportElement x="0" y="35" width="556" height="1"/>
+			</line>
+			<staticText>
+				<reportElement x="6" y="11" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[IDENTIFICACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="109" y="11" width="258" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRES Y APELLIDOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="369" y="11" width="187" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FIRMA DE ACEPTACIÓN]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30">
+			<line>
+				<reportElement x="377" y="25" width="179" height="1"/>
+			</line>
+			<textField>
+				<reportElement x="106" y="5" width="261" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="5" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{tipoDocumento}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<noData>
+		<band height="31">
+			<staticText>
+				<reportElement x="0" y="7" width="556" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NO EXISTE INFORMACIÓN A MOSTRAR]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificado_n" language="groovy" pageWidth="612" pageHeight="792" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="19df85f5-1846-40ef-badd-955b8e209ddd">
+	<property name="ireport.zoom" value="0.75"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="pNombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="752" splitType="Stretch">
+			<textField>
+				<reportElement uuid="baab4e85-af9b-43cd-841f-dcf1be97f76b" x="112" y="154" width="336" height="154"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{pNombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

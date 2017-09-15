@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="variosCertificados" language="groovy" pageWidth="612" pageHeight="792" whenNoDataType="NoDataSection" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="pNombre" class="java.lang.String"/>
+	<parameter name="pLogo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pDocumento" class="java.lang.String"/>
+	<parameter name="pFechas" class="java.lang.String"/>
+	<parameter name="pCurso" class="java.lang.String"/>
+	<parameter name="pLeyenda" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\workspace\\web\\WebContent\\reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pId" class="java.lang.String"/>
+	<parameter name="pHoras" class="java.lang.String"/>
+	<parameter name="pRuta" class="java.lang.String"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="tipoDocumento" class="java.lang.String"/>
+	<field name="tipoCertificado" class="java.lang.String"/>
+	<field name="fechaFin" class="java.lang.String"/>
+	<field name="fechaDisponibilidad" class="java.lang.String"/>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="idCliente" class="java.lang.String"/>
+	<field name="ciudadDocumento" class="java.lang.String"/>
+	<field name="numeroLogos" class="java.lang.String"/>
+	<field name="logoCliente" class="java.lang.String"/>
+	<field name="logoCliente2" class="java.lang.String"/>
+	<field name="logoCliente3" class="java.lang.String"/>
+	<field name="empresaProviene" class="java.lang.String"/>
+	<field name="poseeCapacitador" class="java.lang.String"/>
+	<field name="capacitador" class="java.lang.String"/>
+	<field name="cargoCapacitador" class="java.lang.String"/>
+	<field name="empresaCapacitador" class="java.lang.String"/>
+	<field name="firma1" class="java.lang.String"/>
+	<field name="firma2" class="java.lang.String"/>
+	<group name="todos">
+		<groupExpression><![CDATA[$F{id}]]></groupExpression>
+		<groupHeader>
+			<band height="1">
+				<subreport>
+					<reportElement x="0" y="0" width="612" height="1"/>
+					<subreportParameter name="pDocumento">
+						<subreportParameterExpression><![CDATA[$F{tipoDocumento}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="pLogo2">
+						<subreportParameterExpression><![CDATA[$F{logoCliente2}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="pLogo3">
+						<subreportParameterExpression><![CDATA[$F{logoCliente3}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="pRuta">
+						<subreportParameterExpression><![CDATA[$P{pRuta}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="pCargoCapacitador">
+						<subreportParameterExpression><![CDATA[$F{cargoCapacitador}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="pCapacitador">
+						<subreportParameterExpression><![CDATA[$F{poseeCapacitador}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="pId">
+						<subreportParameterExpression><![CDATA[$F{idCliente}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="pLogo">
+						<subreportParameterExpression><![CDATA[$F{logoCliente}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="pCurso">
+						<subreportParameterExpression><![CDATA[$F{tipoCertificado}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="pFirma1">
+						<subreportParameterExpression><![CDATA[$F{firma1}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="pEmpresaCapacitador">
+						<subreportParameterExpression><![CDATA[$F{empresaCapacitador}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="pFirma2">
+						<subreportParameterExpression><![CDATA[$F{firma2}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="pNombreCapacitador">
+						<subreportParameterExpression><![CDATA[$F{capacitador}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="pHoras">
+						<subreportParameterExpression><![CDATA[$F{fechaDisponibilidad}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="pNumeroLogos">
+						<subreportParameterExpression><![CDATA[$F{numeroLogos}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="pLeyenda">
+						<subreportParameterExpression><![CDATA[$F{fechaFin}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="pEmpresa">
+						<subreportParameterExpression><![CDATA[$F{empresaProviene}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="pFechas">
+						<subreportParameterExpression><![CDATA[$F{ciudadDocumento}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="pNombre">
+						<subreportParameterExpression><![CDATA[$F{nombre}]]></subreportParameterExpression>
+					</subreportParameter>
+					<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.JREmptyDataSource()]]></dataSourceExpression>
+					<subreportExpression class="java.lang.String"><![CDATA[$P{SUBREPORT_DIR} + "certificado.jasper"]]></subreportExpression>
+				</subreport>
+			</band>
+		</groupHeader>
+	</group>
+	<noData>
+		<band height="31">
+			<staticText>
+				<reportElement x="0" y="7" width="612" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NO EXISTEN CERTIFICADOS A MOSTRAR]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

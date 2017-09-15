@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificado" language="groovy" pageWidth="752" pageHeight="572" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="pNombre" class="java.lang.String"/>
+	<parameter name="pLogo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pDocumento" class="java.lang.String"/>
+	<parameter name="pFechas" class="java.lang.String"/>
+	<parameter name="pCurso" class="java.lang.String"/>
+	<parameter name="pLeyenda" class="java.lang.String"/>
+	<background>
+		<band height="572" splitType="Stretch">
+			<image onErrorType="Icon">
+				<reportElement x="0" y="0" width="752" height="572"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{pLogo}+"/diploma_300_dpi.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="572" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="191" width="752" height="95"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Monotype Corsiva" size="62" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{pNombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="267" width="752" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{pDocumento}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="125" y="335" width="503" height="28"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{pFechas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="302" width="752" height="31"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="22" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{pCurso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="489" width="752" height="20"/>
+				<textElement textAlignment="Center">
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{pLeyenda}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>

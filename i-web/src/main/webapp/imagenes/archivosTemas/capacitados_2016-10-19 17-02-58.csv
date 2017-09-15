@@ -1,0 +1,9 @@
+INGRESO DE PERSONAS CAPACITADAS - ISOLUCIONES S.A.S;;;;
+*Los campos marcados en su cabecera con (*) son obligatorios;;;;
+* Los tipos de documento que puede ingresar son: CC ó CE ó TI y los documentos deben ingresarse sin puntos ni comas;;;;
+* Los datos comienzan a ingresarse desde la fila 7. ;;;;
+;;;;
+*NOMBRE;*TIPO DOC;*DOCUMENTO;CORREO;EMPRESA PROVIENE
+CARLOS RENGIFO;CC;91110000;info@isolucionesltda.com;ATRES
+LEIDY RAMIREZ;CC;1102365304;directorcomercial@isolucionesltda.com;ATRES
+MELISA MANTILLA;CC;1095802437;gadministrativa@isolucionesltda.com;ATRES

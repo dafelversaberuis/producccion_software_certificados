@@ -1,0 +1,7 @@
+INGRESO DE PERSONAS CAPACITADAS - ISOLUCIONES S.A.S;;;;
+*Los campos marcados en su cabecera con (*) son obligatorios;;;;
+* Los tipos de documento que puede ingresar son: CC ó CE ó TI y los documentos deben ingresarse sin puntos ni comas;;;;
+* Los datos comienzan a ingresarse desde la fila 7. ;;;;
+;;;;
+*NOMBRE;*TIPO DOC;*DOCUMENTO;CORREO;EMPRESA PROVIENE
+Pepa Pérez;CC;37310922;dagovergel@hotmail.com;Mercagan Parrilla

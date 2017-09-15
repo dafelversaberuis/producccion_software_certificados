@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificado" language="groovy" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="612" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="520"/>
+	<parameter name="pNombre" class="java.lang.String"/>
+	<parameter name="pLogo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pDocumento" class="java.lang.String"/>
+	<parameter name="pFechas" class="java.lang.String"/>
+	<parameter name="pCurso" class="java.lang.String"/>
+	<parameter name="pLeyenda" class="java.lang.String"/>
+	<parameter name="pId" class="java.lang.String"/>
+	<parameter name="pHoras" class="java.lang.String"/>
+	<parameter name="pCliente" class="java.lang.String"/>
+	<parameter name="pLogo2" class="java.lang.String"/>
+	<parameter name="pLogo3" class="java.lang.String"/>
+	<parameter name="pNumeroLogos" class="java.lang.String"/>
+	<parameter name="pRuta" class="java.lang.String"/>
+	<parameter name="pEmpresa" class="java.lang.String"/>
+	<parameter name="pCapacitador" class="java.lang.String"/>
+	<parameter name="pCargoCapacitador" class="java.lang.String"/>
+	<parameter name="pEmpresaCapacitador" class="java.lang.String"/>
+	<parameter name="pFirma1" class="java.lang.String"/>
+	<parameter name="pFirma2" class="java.lang.String"/>
+	<parameter name="pNombreCapacitador" class="java.lang.String"/>
+	<background>
+		<band height="572" splitType="Stretch">
+			<image scaleImage="RealSize" onErrorType="Icon">
+				<reportElement x="0" y="0" width="612" height="572"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{pRuta}+"/diploma_300_dpi.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<title>
+		<band height="782" splitType="Stretch">
+			<image scaleImage="RealSize" onErrorType="Blank">
+				<reportElement x="17" y="561" width="390" height="83">
+					<printWhenExpression><![CDATA[$P{pCapacitador}!=null && $P{pCapacitador}.equals("S")]]></printWhenExpression>
+				</reportElement>
+				<imageExpression class="java.lang.String"><![CDATA[$P{pFirma2}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="3" y="307" width="464" height="50" forecolor="#24324D">
+					<printWhenExpression><![CDATA[$P{pNombre}.length()<21]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="28" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{pNombre}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="346" width="464" height="50" forecolor="#24324D"/>
+				<textElement textAlignment="Center">
+					<font size="16" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{pDocumento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="44" y="416" width="423" height="94"/>
+				<textElement textAlignment="Justified">
+					<font size="15" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{pCurso}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="44" y="537" width="423" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{pLeyenda}]]></textFieldExpression>
+			</textField>
+			<image hAlign="Center" onErrorType="Blank">
+				<reportElement x="4" y="667" width="340" height="76">
+					<printWhenExpression><![CDATA[$P{pNumeroLogos}!=null && $P{pNumeroLogos}.equals("1")]]></printWhenExpression>
+				</reportElement>
+				<imageExpression class="java.lang.String"><![CDATA[$P{pLogo}]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="44" y="517" width="423" height="20" forecolor="#273852"/>
+				<textElement textAlignment="Center">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{pHoras}]]></textFieldExpression>
+			</textField>
+			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement x="4" y="668" width="170" height="76">
+					<printWhenExpression><![CDATA[$P{pNumeroLogos}!=null && $P{pNumeroLogos}.equals("2")]]></printWhenExpression>
+				</reportElement>
+				<imageExpression class="java.lang.String"><![CDATA[$P{pLogo}]]></imageExpression>
+			</image>
+			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement x="174" y="668" width="170" height="76">
+					<printWhenExpression><![CDATA[$P{pNumeroLogos}!=null && $P{pNumeroLogos}.equals("2")]]></printWhenExpression>
+				</reportElement>
+				<imageExpression class="java.lang.String"><![CDATA[$P{pLogo2}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="189" y="740" width="218" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{pFechas}]]></textFieldExpression>
+			</textField>
+			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement x="20" y="668" width="105" height="76">
+					<printWhenExpression><![CDATA[$P{pNumeroLogos}!=null && $P{pNumeroLogos}.equals("3")]]></printWhenExpression>
+				</reportElement>
+				<imageExpression class="java.lang.String"><![CDATA[$P{pLogo}]]></imageExpression>
+			</image>
+			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement x="125" y="668" width="105" height="76">
+					<printWhenExpression><![CDATA[$P{pNumeroLogos}!=null && $P{pNumeroLogos}.equals("3")]]></printWhenExpression>
+				</reportElement>
+				<imageExpression class="java.lang.String"><![CDATA[$P{pLogo2}]]></imageExpression>
+			</image>
+			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement x="230" y="668" width="105" height="76">
+					<printWhenExpression><![CDATA[$P{pNumeroLogos}!=null && $P{pNumeroLogos}.equals("3")]]></printWhenExpression>
+				</reportElement>
+				<imageExpression class="java.lang.String"><![CDATA[$P{pLogo3}]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="4" y="382" width="463" height="20" forecolor="#27324D"/>
+				<textElement textAlignment="Center">
+					<font size="13" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{pEmpresa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4" y="307" width="464" height="50" forecolor="#24324D">
+					<printWhenExpression><![CDATA[$P{pNombre}.length()>=21]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="22" isItalic="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{pNombre}.toUpperCase()]]></textFieldExpression>
+			</textField>
+			<image scaleImage="RealSize" onErrorType="Blank">
+				<reportElement x="160" y="561" width="194" height="83">
+					<printWhenExpression><![CDATA[$P{pCapacitador}==null || $P{pCapacitador}.equals("N")]]></printWhenExpression>
+				</reportElement>
+				<imageExpression class="java.lang.String"><![CDATA[$P{pFirma1}]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="44" y="626" width="423" height="20" forecolor="#24324D">
+					<printWhenExpression><![CDATA[$P{pCapacitador}==null || $P{pCapacitador}.equals("N")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" markup="none">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Carlos Alberto Rengifo M.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="637" width="423" height="20" forecolor="#24324D">
+					<printWhenExpression><![CDATA[$P{pCapacitador}==null || $P{pCapacitador}.equals("N")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" markup="none">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Representante Legal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="44" y="648" width="423" height="20" forecolor="#24324D">
+					<printWhenExpression><![CDATA[$P{pCapacitador}==null || $P{pCapacitador}.equals("N")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" markup="none">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Isoluciones S.A.S]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="637" width="162" height="20" forecolor="#24324D">
+					<printWhenExpression><![CDATA[$P{pCapacitador}!=null && $P{pCapacitador}.equals("S")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" markup="none">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Representante Legal]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="648" width="162" height="20" forecolor="#24324D">
+					<printWhenExpression><![CDATA[$P{pCapacitador}!=null && $P{pCapacitador}.equals("S")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" markup="none">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Isoluciones S.A.S]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="626" width="162" height="20" forecolor="#24324D">
+					<printWhenExpression><![CDATA[$P{pCapacitador}!=null && $P{pCapacitador}.equals("S")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" markup="none">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Carlos Alberto Rengifo M.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="181" y="626" width="266" height="20" forecolor="#24324D">
+					<printWhenExpression><![CDATA[$P{pCapacitador}!=null && $P{pCapacitador}.equals("S")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" markup="none">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{pNombreCapacitador}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="181" y="648" width="266" height="20" forecolor="#24324D">
+					<printWhenExpression><![CDATA[$P{pCapacitador}!=null && $P{pCapacitador}.equals("S")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" markup="none">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{pEmpresaCapacitador}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="181" y="637" width="266" height="20" forecolor="#24324D">
+					<printWhenExpression><![CDATA[$P{pCapacitador}!=null && $P{pCapacitador}.equals("S")]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" markup="none">
+					<font size="9" isBold="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{pCargoCapacitador}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>
