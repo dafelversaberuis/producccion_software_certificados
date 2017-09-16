@@ -28,6 +28,7 @@ public class Conexion {
 //		url = "jdbc:mysql://localhost:3306/produccion_certificados";
 //		username = "root";
 //		password = "12345678";
+		
 
 		// openshift v3
 		url = "jdbc:mysql://mysql:3306/produccion_certificados";
