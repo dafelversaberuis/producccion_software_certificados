@@ -105,7 +105,10 @@ if (cursos!=null && cursos.size() > 0) {
 		<td align="right" bgcolor="<%=color %>" style="width:5%"><font color="black"><%=j%></font></td>
 		<td align="left" bgcolor="<%=color %>" style="width:5%"><font color="black"><%=i[1] %></font></td>
 		<td align="left"  bgcolor="<%=color %>"> 
-		<%if(i[3]!=null && !i[3].equals("")){ %><a href="#" onclick="window.open('/i-web/imagenes/archivosTemas/<%=i[3] %>', 'descarga_memoria', 'toolbar=no, menubar=no, scrollbars=no, resizable=yes, width=600, height=100'); return false;" style="text-decoration:none"><font color="blue">Ver/descargar</font></a><%  }else{%>No disponible<% } %>
+		<%if(i[3]!=null && !i[3].equals("")){ if(i[4]!=null){%>
+				<a href="/i-web/ver_archivo_adjunto.jsp?id=<%=i[0] %>" target="_blank" style="text-decoration:none">Ver/Descargar</a><%}else{ %><a href="#" onclick="window.open('/i-web/imagenes/archivosTemas/<%=i[3] %>', 'descarga_memoria', 'toolbar=no, menubar=no, scrollbars=no, resizable=yes, width=600, height=100'); return false;" style="text-decoration:none"><font color="blue">Ver/descargar</font></a><%}  }else{%>No disponible<% } %>
+		
+		
 		</td> 
 		
 	</tr>

@@ -498,13 +498,15 @@ body,input,textarea,select {
 					<!-- .et_pb_section -->
 					<div class="et_pb_section  et_pb_section_2 et_section_regular">
 
-						<%
+						<% 
+							String directorio_ruta = application.getRealPath("imagenes")+"/logosFinanciadores/";
 							List<Object[]> cursos = bAdministrarPublicaciones.getFinanciadores();
 							
 							String rutaImagen = "";
 
 							int cuentaColumnas = 0;
 							int n=0;
+							int sw=0;
 							if (cursos!=null && cursos.size() > 0) {
 								for(Object[] c: cursos){
 								n++;
@@ -515,22 +517,35 @@ body,input,textarea,select {
 
 <%
 								}
-								
+								sw=0;
 								List<String> cuales = new ArrayList<String>();
 								int numeroLogos = 0;
 								if(c[2]!=null && c[2].equals("S")){
 									numeroLogos++;
 									cuales.add("1");
+									
+									if(c[5]!=null){
+									sw=1;
+									bAdministrarPublicaciones.guardarArchivoDisco(directorio_ruta + "logo_financiador_"+c[0]+"-1.jpg", (byte[])c[5]);
+									
+									}
 								}
 								
 								if(c[3]!=null && c[3].equals("S")){
 									numeroLogos++;
 									cuales.add("2");
+									if(c[6]!=null){
+									bAdministrarPublicaciones.guardarArchivoDisco(directorio_ruta + "logo_financiador_"+c[0]+"-2.jpg", (byte[])c[6]);
+									}
 								}
 								
 								if(c[4]!=null && c[4].equals("S")){
 									numeroLogos++;
 									cuales.add("3");
+									if(c[7]!=null){
+										sw=1;
+									bAdministrarPublicaciones.guardarArchivoDisco(directorio_ruta + "logo_financiador_"+c[0]+"-3.jpg", (byte[])c[7]);
+									}
 								}
 								
 								int cuenta=0;
@@ -539,12 +554,25 @@ body,input,textarea,select {
 									for(String p: cuales){
 										cuenta++;
 										if(cuenta==1){
-											rutaImagen = "imagenes/logosFinanciadores/logo_financiador_"+c[0]+"-"+p+".jpg";
+											
+											if(sw==1){
+												rutaImagen = "/i-web/ver_foto_adjunta.jsp?id="+c[0]+"&n="+p;
+											}else{
+												
+												rutaImagen = "imagenes/logosFinanciadores/logo_financiador_"+c[0]+"-"+p+".jpg";
+											}
+											
 											break;
 											
 											
 										}else{
-											rutaImagen = "imagenes/logosFinanciadores/logo_financiador_"+c[0]+"-"+p+".jpg";
+											
+											if(sw==1){
+												rutaImagen = "/i-web/ver_foto_adjunta.jsp?id="+c[0]+"&n="+p;
+											}else{
+												
+												rutaImagen = "imagenes/logosFinanciadores/logo_financiador_"+c[0]+"-"+p+".jpg";
+											}
 											break;
 											
 										}

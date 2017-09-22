@@ -1,5 +1,7 @@
 package beans;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -31,9 +33,9 @@ public class Conexion {
 		
 
 		// openshift v3
-		url = "jdbc:mysql://mysql:3306/produccion_certificados";
-		username = "dannypipe_certificados";
-		password = "meli0523_certificados";
+		url = "jdbc:mysql://mysql:3306/isolucionesv3";
+		username = "isolucionesv3";
+		password = "meli0523";
 
 		// openshift v2
 		// url = "jdbc:mysql://127.8.115.130:3306/isoluciones";
@@ -257,6 +259,53 @@ public class Conexion {
 		try {
 			stmt = con.createStatement();
 			stmt.executeUpdate(sentencia);
+		} catch (SQLException sqlex) {
+			// System.out.println("ERROR RUTINA: " + sqlex);
+			return false;
+		} catch (RuntimeException rex) {
+			// System.out.println("ERROR RUTINA: " + rex);
+			return false;
+		} catch (Exception ex) {
+			// System.out.println("EXCEPCION: " + ex);
+			return false;
+		}
+		return true;
+	}
+	
+	
+	public boolean actualizarBD3(String tabla, String[] campos, String[][] condiciones, FileInputStream is, int longitud, File fBlob) {
+
+		String sentencia = new String();
+		StringBuffer buffer = new StringBuffer();
+		int numParam = 1;
+		pstmt = null;
+		buffer.append("UPDATE " + tabla + " SET ");
+		for (int i = 0; i <= numParam - 1; i++) {
+			if (i == 0) {
+				buffer.append(campos[i] + "=?");
+			} else {
+				buffer.append("," + campos[i] + "=?");
+			}
+		}
+		numParam = condiciones.length;
+		for (int j = 0; j <= numParam - 1; j++) {
+			if (j == 0) {
+				buffer.append(" WHERE " + condiciones[j][0] + " = '" + condiciones[j][1] + "'");
+
+			} else {
+				buffer.append(" AND " + condiciones[j][0] + " = '" + condiciones[j][1] + "'");
+			}
+		}
+		sentencia = buffer.toString();
+
+		try {
+			pstmt = con.prepareStatement(sentencia);
+
+			pstmt.setBinaryStream(1, is, (int) fBlob.length());
+
+			if (pstmt.executeUpdate() == 0) {
+				return false;
+			}
 		} catch (SQLException sqlex) {
 			// System.out.println("ERROR RUTINA: " + sqlex);
 			return false;

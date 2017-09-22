@@ -52,9 +52,9 @@ background-color: #AFDBF6;
 	function cargarImagen()
 	{
 		if(document.frm_cargar.fil_imagen.value)
-		{
+		{   
 			cadena="";
-			cadena = "etiqueta_capacitacion="+(document.getElementById("etiqueta_capacitacion").value.replace(/^\s*|\s*$/g, ""))+"&certificado="+encodeURIComponent(document.getElementById("certificado").value.replace(/^\s*|\s*$/g, ""))+"&ciudad_curso="+document.getElementById("ciudad_curso").value.replace(/^\s*|\s*$/g, "")+"&horas_certificadas="+encodeURIComponent(document.getElementById("horas_certificadas").value.replace(/^\s*|\s*$/g, ""))+"&fecha_inicio="+encodeURIComponent(document.getElementById("fecha_inicio").value.replace(/^\s*|\s*$/g, ""))+"&fecha_maxima="+encodeURIComponent(document.getElementById("fecha_maxima").value.replace(/^\s*|\s*$/g, ""))+"&cliente="+encodeURIComponent(document.getElementById("cliente").value.replace(/^\s*|\s*$/g, ""))+"&numero_firmas="+encodeURIComponent(document.getElementById("numero_firmas").value.replace(/^\s*|\s*$/g, ""))+"&nombre_capacitador="+(document.getElementById("nombre_capacitador").value.replace(/^\s*|\s*$/g, ""))+"&cargo_capacitador="+(document.getElementById("cargo_capacitador").value.replace(/^\s*|\s*$/g, ""))+"&empresa_capacitador="+(document.getElementById("empresa_capacitador").value.replace(/^\s*|\s*$/g, ""));
+			cadena = "etiqueta_capacitacion="+encodeURIComponent((document.getElementById("etiqueta_capacitacion").value.replace(/^\s*|\s*$/g, "")))+"&certificado="+encodeURIComponent(document.getElementById("certificado").value.replace(/^\s*|\s*$/g, ""))+"&ciudad_curso="+encodeURIComponent(document.getElementById("ciudad_curso").value.replace(/^\s*|\s*$/g, ""))+"&horas_certificadas="+(document.getElementById("horas_certificadas").value.replace(/^\s*|\s*$/g, ""))+"&fecha_inicio="+encodeURIComponent(document.getElementById("fecha_inicio").value.replace(/^\s*|\s*$/g, ""))+"&fecha_maxima="+encodeURIComponent(document.getElementById("fecha_maxima").value.replace(/^\s*|\s*$/g, ""))+"&cliente="+encodeURIComponent(document.getElementById("cliente").value.replace(/^\s*|\s*$/g, ""))+"&numero_firmas="+encodeURIComponent(document.getElementById("numero_firmas").value.replace(/^\s*|\s*$/g, ""))+"&nombre_capacitador="+encodeURIComponent((document.getElementById("nombre_capacitador").value.replace(/^\s*|\s*$/g, "")))+"&cargo_capacitador="+encodeURIComponent((document.getElementById("cargo_capacitador").value.replace(/^\s*|\s*$/g, "")))+"&empresa_capacitador="+encodeURIComponent((document.getElementById("empresa_capacitador").value.replace(/^\s*|\s*$/g, "")));
 		
 			document.frm_cargar.action="recibirArchivoExcel.jsp?"+cadena;
 			document.frm_cargar.submit();
@@ -86,7 +86,7 @@ String cargo_capacitador =  request.getParameter("cargo_capacitador"); //
 String empresa_capacitador =  request.getParameter("empresa_capacitador"); //
 
 
-
+//out.println(ciudad_curso);
 
 
 %>

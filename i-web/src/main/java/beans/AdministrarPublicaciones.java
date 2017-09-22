@@ -2,6 +2,9 @@ package beans;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
@@ -22,9 +25,7 @@ public class AdministrarPublicaciones {
 	public boolean validateEmail(String email) {
 
 		// Compiles the given regular expression into a pattern.
-		Pattern pattern = Pattern
-				.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-						+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
+		Pattern pattern = Pattern.compile("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 
 		// Match the given input against this pattern
 		Matcher matcher = pattern.matcher(email);
@@ -40,23 +41,7 @@ public class AdministrarPublicaciones {
 		String[] parametros = parametro.getarametros();
 
 		String asunto = "Certificación disponible";
-		String mensaje = "<table width='100%' border='0'>"
-				+ "<tr>"
-				+ "<td colspan='2' align='left' valign='middle'><strong>Sistema de informaci&oacute;n de certificaciones - Isoluciones </strong></td>"
-				+ "</tr>"
-				+ "<tr>"
-				+ "<td colspan='2'>&nbsp;</td>"
-				+ "</tr>"
-				+ "<tr>"
-				+ "<td colspan='2'><p>Estimado amigo, Isoluciones ya generó certificado y memorias de la(s) capacitación(es) recibida(s), ingrese a nuestra plataforma y descargue esta información. "
-				+ "</p>"
-				+ "<p>&nbsp; </p></td>"
-				+ "</tr>"
-				+ "<tr>"
-				+ "<td colspan='2'><span class='Estilo6'>* Puedes visitar nuestro software en cualquier momento dirigi&eacute;ndote a la direcci&oacute;n de internet: <a href='"
-				+ parametros[0] + "'>" + parametros[0]
-				+ "</a> &oacute; contactarnos a nuestro correo: "
-				+ parametros[1] + " </span></td>" + "</tr>" + "</table>";
+		String mensaje = "<table width='100%' border='0'>" + "<tr>" + "<td colspan='2' align='left' valign='middle'><strong>Sistema de informaci&oacute;n de certificaciones - Isoluciones </strong></td>" + "</tr>" + "<tr>" + "<td colspan='2'>&nbsp;</td>" + "</tr>" + "<tr>" + "<td colspan='2'><p>Estimado amigo, Isoluciones ya generó certificado y memorias de la(s) capacitación(es) recibida(s), ingrese a nuestra plataforma y descargue esta información. " + "</p>" + "<p>&nbsp; </p></td>" + "</tr>" + "<tr>" + "<td colspan='2'><span class='Estilo6'>* Puedes visitar nuestro software en cualquier momento dirigi&eacute;ndote a la direcci&oacute;n de internet: <a href='" + parametros[0] + "'>" + parametros[0] + "</a> &oacute; contactarnos a nuestro correo: " + parametros[1] + " </span></td>" + "</tr>" + "</table>";
 
 		try {
 			email.enviarCorreoMasivo(mensaje, asunto, aCorreos);
@@ -66,10 +51,7 @@ public class AdministrarPublicaciones {
 		}
 	}
 
-	public String guardarCertificadoExcel(File archivo, String ciudad_curso,
-			String fecha_maxima, String etiqueta_capacitacion,
-			String fecha_inicio, String horas_certificadas, String certificado,
-			String cliente, String numero_firmas, String nombre_capacitador, String cargo_capacitador, String empresa_capacitador) throws Exception {
+	public String guardarCertificadoExcel(File archivo, String ciudad_curso, String fecha_maxima, String etiqueta_capacitacion, String fecha_inicio, String horas_certificadas, String certificado, String cliente, String numero_firmas, String nombre_capacitador, String cargo_capacitador, String empresa_capacitador) throws Exception {
 		Conexion conexion = new Conexion();
 		String error = "ok";
 		InputStream input = null;
@@ -86,8 +68,7 @@ public class AdministrarPublicaciones {
 
 			Charset inputCharset = Charset.forName("ISO-8859-1");
 
-			archivoLeido = new CsvReader(new InputStreamReader(input,
-					inputCharset), ';');
+			archivoLeido = new CsvReader(new InputStreamReader(input, inputCharset), ';');
 
 			List<String[]> datosLista = new ArrayList<String[]>();
 
@@ -108,12 +89,8 @@ public class AdministrarPublicaciones {
 					// Valida que vengan llenos los campos de codigo estudiante
 					// y
 					// nota
-					if (archivoLeido.get(0) != null
-							&& archivoLeido.get(1) != null
-							&& archivoLeido.get(2) != null) {
-						if (!archivoLeido.get(0).trim().equals("")
-								&& !archivoLeido.get(1).trim().equals("")
-								&& !archivoLeido.get(2).trim().equals("")) {
+					if (archivoLeido.get(0) != null && archivoLeido.get(1) != null && archivoLeido.get(2) != null) {
+						if (!archivoLeido.get(0).trim().equals("") && !archivoLeido.get(1).trim().equals("") && !archivoLeido.get(2).trim().equals("")) {
 
 							String[] nuevo = new String[16];
 
@@ -133,19 +110,13 @@ public class AdministrarPublicaciones {
 							nuevo[4] = etiqueta_capacitacion; // label etiqueta
 							nuevo[5] = fecha_inicio; // fecha inicio
 							nuevo[6] = archivoLeido.get(0).trim(); // nombre
-																	// completo
+							// completo
 							nuevo[7] = horas_certificadas; // horas
 							nuevo[8] = certificado; // tipo certificado
 
-							if (archivoLeido.get(1).trim().toUpperCase()
-									.equals("CC")
-									|| archivoLeido.get(1).trim().toUpperCase()
-											.equals("CE")
-									|| archivoLeido.get(1).trim().toUpperCase()
-											.equals("TI")) {
+							if (archivoLeido.get(1).trim().toUpperCase().equals("CC") || archivoLeido.get(1).trim().toUpperCase().equals("CE") || archivoLeido.get(1).trim().toUpperCase().equals("TI")) {
 
-								nuevo[9] = archivoLeido.get(1).trim()
-										.toUpperCase(); // tipo doc
+								nuevo[9] = archivoLeido.get(1).trim().toUpperCase(); // tipo doc
 
 							} else {
 
@@ -157,18 +128,17 @@ public class AdministrarPublicaciones {
 							if ((nuevo[10]).equals("0")) {
 								nuevo[10] = null;
 							}
-							
-							
+
 							nuevo[11] = archivoLeido.get(4); // empresa proveniente
 
 							if (nuevo[11] == null) {
 								nuevo[11] = "";
 							}
-							
-							nuevo[12] = numero_firmas; 
-							nuevo[13] = nombre_capacitador; 
-							nuevo[14] = cargo_capacitador; 
-							nuevo[15] = empresa_capacitador; 
+
+							nuevo[12] = numero_firmas;
+							nuevo[13] = nombre_capacitador;
+							nuevo[14] = cargo_capacitador;
+							nuevo[15] = empresa_capacitador;
 
 							datosLista.add(nuevo);
 
@@ -197,15 +167,12 @@ public class AdministrarPublicaciones {
 
 				String[] fechaPartida = datos[0][5].split("-");
 
-				String base = "RCA/" + fechaPartida[2] + "" + fechaPartida[1]
-						+ "" + fechaPartida[0];
+				String base = "RCA/" + fechaPartida[2] + "" + fechaPartida[1] + "" + fechaPartida[0];
 
 				String sartaConsecutivo = "";
 
 				int maximo = 0;
-				ResultSet rs = conexion
-						.consultarBD("SELECT MAX(consecutivo) FROM certificados WHERE fecha_inicio= '"
-								+ datos[0][5] + "'");
+				ResultSet rs = conexion.consultarBD("SELECT MAX(consecutivo) FROM certificados WHERE fecha_inicio= '" + datos[0][5] + "'");
 
 				try {
 					if (rs.next()) {
@@ -223,59 +190,11 @@ public class AdministrarPublicaciones {
 
 					sartaConsecutivo = base + maximo;
 
-					if (datos[i][10] == null
-							|| (datos[i][10] != null && ("" + datos[i][10])
-									.trim().equals(""))) {
-						conexion.actualizarBD("INSERT INTO certificados(tipo_documento,documento,correo,nombre_completo,fecha_inicio,etiqueta,fecha_disponibilidad,tipo_certificado,ciudad_depto_curso,numero_horas,consecutivo,consecutivo_completo,empresa_proveniente, posee_capacitador, capacitador, cargo_capacitador, empresa_capacitador) VALUES ('"
-								+ datos[i][9]
-								+ "','"
-								+ datos[i][2]
-								+ "','"
-								+ datos[i][1]
-								+ "','"
-								+ datos[i][6]
-								+ "','"
-								+ datos[i][5]
-								+ "','"
-								+ datos[i][4]
-								+ "','"
-								+ datos[i][3]
-								+ "','"
-								+ datos[i][8]
-								+ "','"
-								+ datos[i][0]
-								+ "','"
-								+ datos[i][7]
-								+ "','"
-								+ maximo + "','" + sartaConsecutivo + "','"+datos[i][11]+"','"+datos[i][12]+"','"+datos[i][13]+"','"+datos[i][14]+"','"+datos[i][15]+"')");
+					if (datos[i][10] == null || (datos[i][10] != null && ("" + datos[i][10]).trim().equals(""))) {
+						conexion.actualizarBD("INSERT INTO certificados(tipo_documento,documento,correo,nombre_completo,fecha_inicio,etiqueta,fecha_disponibilidad,tipo_certificado,ciudad_depto_curso,numero_horas,consecutivo,consecutivo_completo,empresa_proveniente, posee_capacitador, capacitador, cargo_capacitador, empresa_capacitador) VALUES ('" + datos[i][9] + "','" + datos[i][2] + "','" + datos[i][1] + "','" + datos[i][6] + "','" + datos[i][5] + "','" + datos[i][4] + "','" + datos[i][3] + "','" + datos[i][8] + "','" + datos[i][0] + "','" + datos[i][7] + "','" + maximo + "','" + sartaConsecutivo + "','" + datos[i][11] + "','" + datos[i][12] + "','" + datos[i][13] + "','" + datos[i][14] + "','" + datos[i][15] + "')");
 					} else {
 
-						conexion.actualizarBD("INSERT INTO certificados(tipo_documento,documento,correo,nombre_completo,fecha_inicio,etiqueta,fecha_disponibilidad,tipo_certificado,ciudad_depto_curso,numero_horas,id_cliente,consecutivo,consecutivo_completo,empresa_proveniente, posee_capacitador, capacitador, cargo_capacitador, empresa_capacitador) VALUES ('"
-								+ datos[i][9]
-								+ "','"
-								+ datos[i][2]
-								+ "','"
-								+ datos[i][1]
-								+ "','"
-								+ datos[i][6]
-								+ "','"
-								+ datos[i][5]
-								+ "','"
-								+ datos[i][4]
-								+ "','"
-								+ datos[i][3]
-								+ "','"
-								+ datos[i][8]
-								+ "','"
-								+ datos[i][0]
-								+ "','"
-								+ datos[i][7]
-								+ "','"
-								+ datos[i][10]
-								+ "','"
-								+ maximo
-								+ "','"
-								+ sartaConsecutivo + "','"+datos[i][11]+"','"+datos[i][12]+"','"+datos[i][13]+"','"+datos[i][14]+"','"+datos[i][15]+"')");
+						conexion.actualizarBD("INSERT INTO certificados(tipo_documento,documento,correo,nombre_completo,fecha_inicio,etiqueta,fecha_disponibilidad,tipo_certificado,ciudad_depto_curso,numero_horas,id_cliente,consecutivo,consecutivo_completo,empresa_proveniente, posee_capacitador, capacitador, cargo_capacitador, empresa_capacitador) VALUES ('" + datos[i][9] + "','" + datos[i][2] + "','" + datos[i][1] + "','" + datos[i][6] + "','" + datos[i][5] + "','" + datos[i][4] + "','" + datos[i][3] + "','" + datos[i][8] + "','" + datos[i][0] + "','" + datos[i][7] + "','" + datos[i][10] + "','" + maximo + "','" + sartaConsecutivo + "','" + datos[i][11] + "','" + datos[i][12] + "','" + datos[i][13] + "','" + datos[i][14] + "','" + datos[i][15] + "')");
 
 					}
 
@@ -296,15 +215,13 @@ public class AdministrarPublicaciones {
 
 	}
 
-	public int actualizarArchivoTema(String id, String nombreArchivo) {
+	public int actualizarArchivoTema(String id, String nombreArchivo,String contenttype) {
 
 		Conexion conexion = new Conexion();
 		int exito = 0;
 		try {
 
-			boolean actualizo = conexion
-					.actualizarBD("UPDATE temas SET archivo ='"
-							+ nombreArchivo.toLowerCase() + "' WHERE id =" + id);
+			boolean actualizo = conexion.actualizarBD("UPDATE temas SET archivo ='" + nombreArchivo.toLowerCase() + "', content_type='"+contenttype+"' WHERE id =" + id);
 			if (actualizo) {
 				exito = 1;
 			}
@@ -318,13 +235,41 @@ public class AdministrarPublicaciones {
 		return exito;
 
 	}
+	
+	
+	public void actualizarArchivov3(File archivo, String id) {
+
+		Conexion conexion = new Conexion();
+		byte[] array = null;
+
+		try {
+			FileInputStream is = new FileInputStream(archivo);
+
+			// guarda el archivo
+
+			String[][] condiciones = new String[1][2];
+			condiciones[0][0] = "id";
+			condiciones[0][1] = "" + id;
+			String[] campos = new String[1];
+			campos[0] = "array";
+
+			Object[] valores = new Object[1];
+			valores[0] = array;
+			boolean oka = conexion.actualizarBD3("temas", campos, condiciones, is, (int) archivo.length(), archivo);
+
+			conexion.cerrarConexion();
+
+		} catch (Exception e) {
+
+		}
+
+	}
 
 	public int eliminarArchivoTema(String id, String ruta) {
 		Conexion conexion = new Conexion();
 		conexion.setAutoCommitBD(true);
 		int exito = 0;
-		boolean actualizo = conexion
-				.actualizarBD("UPDATE temas SET archivo = NULL WHERE id =" + id);
+		boolean actualizo = conexion.actualizarBD("UPDATE temas SET archivo = NULL WHERE id =" + id);
 
 		java.io.File archivo = new java.io.File(ruta);
 		if (actualizo) {
@@ -344,9 +289,7 @@ public class AdministrarPublicaciones {
 		int exito = 0;
 		try {
 
-			boolean actualizo = conexion
-					.actualizarBD("UPDATE temas SET nombre='" + nombre.trim()
-							+ "' WHERE id=" + idTema);
+			boolean actualizo = conexion.actualizarBD("UPDATE temas SET nombre='" + nombre.trim() + "' WHERE id=" + idTema);
 			if (actualizo) {
 				exito = 1;
 			}
@@ -366,9 +309,7 @@ public class AdministrarPublicaciones {
 		int exito = 0;
 		try {
 
-			boolean actualizo = conexion
-					.actualizarBD("INSERT INTO temas(nombre,id_curso) VALUES('"
-							+ nombre.trim() + "'," + idCurso + ")");
+			boolean actualizo = conexion.actualizarBD("INSERT INTO temas(nombre,id_curso) VALUES('" + nombre.trim() + "'," + idCurso + ")");
 			if (actualizo) {
 				exito = 1;
 			}
@@ -389,8 +330,7 @@ public class AdministrarPublicaciones {
 		int g = 0;
 		boolean actualizo = false;
 
-		actualizo = conexion.actualizarBD("DELETE FROM temas WHERE id="
-				+ Integer.parseInt(idAdministrador));
+		actualizo = conexion.actualizarBD("DELETE FROM temas WHERE id=" + Integer.parseInt(idAdministrador));
 
 		conexion.cerrarConexion();
 
@@ -416,12 +356,15 @@ public class AdministrarPublicaciones {
 		ResultSet rs = conexion.consultarBD(sentencia);
 		try {
 			if (rs.next()) {
-				curso = new Object[4];
+				curso = new Object[6];
 
 				curso[0] = rs.getObject(1);
 				curso[1] = rs.getObject(2);
 				curso[2] = rs.getObject(3);
 				curso[3] = rs.getObject(4);
+				
+				curso[4] = rs.getBytes(5);
+				curso[5] = rs.getObject(6);
 
 			}
 			rs.close();
@@ -437,18 +380,20 @@ public class AdministrarPublicaciones {
 
 		List<Object[]> cursos = new ArrayList<Object[]>();
 		Conexion conexion = new Conexion();
-		String sentencia = "SELECT * FROM temas a WHERE a.id_curso=" + id
-				+ " ORDER BY a.nombre";
+		String sentencia = "SELECT * FROM temas a WHERE a.id_curso=" + id + " ORDER BY a.nombre";
 		Object[] curso = null;
 		ResultSet rs = conexion.consultarBD(sentencia);
 		try {
 			while (rs.next()) {
-				curso = new Object[4];
+				curso = new Object[6];
 
 				curso[0] = rs.getObject(1);
 				curso[1] = rs.getObject(2);
 				curso[2] = rs.getObject(3);
 				curso[3] = rs.getObject(4);
+				
+				curso[4] = rs.getBytes(5);
+				curso[5] = rs.getObject(6);
 
 				cursos.add(curso);
 			}
@@ -467,8 +412,7 @@ public class AdministrarPublicaciones {
 		int g = 0;
 		boolean actualizo = false;
 
-		actualizo = conexion.actualizarBD("DELETE FROM financiadores WHERE id="
-				+ Integer.parseInt(idAdministrador));
+		actualizo = conexion.actualizarBD("DELETE FROM financiadores WHERE id=" + Integer.parseInt(idAdministrador));
 
 		if (actualizo) {
 			java.io.File archivo = new java.io.File(ruta + "-1.jpg");
@@ -503,15 +447,11 @@ public class AdministrarPublicaciones {
 		int exito = 0;
 		boolean actualizo = false;
 		if (n != null && !n.equals("1")) {
-			actualizo = conexion
-					.actualizarBD("UPDATE financiadores SET posee_logo" + n
-							+ " ='N' WHERE id =" + id);
+			actualizo = conexion.actualizarBD("UPDATE financiadores SET posee_logo" + n + " ='N' WHERE id =" + id);
 
 		} else {
 
-			actualizo = conexion
-					.actualizarBD("UPDATE financiadores SET posee_logo='N' WHERE id ="
-							+ id);
+			actualizo = conexion.actualizarBD("UPDATE financiadores SET posee_logo='N' WHERE id =" + id);
 
 		}
 
@@ -532,9 +472,7 @@ public class AdministrarPublicaciones {
 		Conexion conexion = new Conexion();
 		conexion.setAutoCommitBD(true);
 		int exito = 0;
-		boolean actualizo = conexion
-				.actualizarBD("UPDATE financiadores SET posee_logo ='N' WHERE id ="
-						+ id);
+		boolean actualizo = conexion.actualizarBD("UPDATE financiadores SET posee_logo ='N' WHERE id =" + id);
 
 		java.io.File archivo = new java.io.File(ruta);
 		if (actualizo) {
@@ -554,9 +492,7 @@ public class AdministrarPublicaciones {
 		int exito = 0;
 		try {
 
-			boolean actualizo = conexion
-					.actualizarBD("INSERT INTO financiadores(nombre) VALUES('"
-							+ financiador.trim() + "')");
+			boolean actualizo = conexion.actualizarBD("INSERT INTO financiadores(nombre) VALUES('" + financiador.trim() + "')");
 			if (actualizo) {
 				exito = 1;
 			}
@@ -576,9 +512,7 @@ public class AdministrarPublicaciones {
 		int exito = 0;
 		try {
 
-			boolean actualizo = conexion
-					.actualizarBD("UPDATE financiadores SET posee_logo ='S' WHERE id ="
-							+ financiador);
+			boolean actualizo = conexion.actualizarBD("UPDATE financiadores SET posee_logo ='S' WHERE id =" + financiador);
 			if (actualizo) {
 				exito = 1;
 			}
@@ -602,20 +536,14 @@ public class AdministrarPublicaciones {
 
 			if (numero != null && numero.equals("2")) {
 
-				actualizo = conexion
-						.actualizarBD("UPDATE financiadores SET posee_logo2 ='S' WHERE id ="
-								+ financiador);
+				actualizo = conexion.actualizarBD("UPDATE financiadores SET posee_logo2 ='S' WHERE id =" + financiador);
 
 			} else if (numero != null && numero.equals("3")) {
 
-				actualizo = conexion
-						.actualizarBD("UPDATE financiadores SET posee_logo3 ='S' WHERE id ="
-								+ financiador);
+				actualizo = conexion.actualizarBD("UPDATE financiadores SET posee_logo3 ='S' WHERE id =" + financiador);
 
 			} else {
-				actualizo = conexion
-						.actualizarBD("UPDATE financiadores SET posee_logo ='S' WHERE id ="
-								+ financiador);
+				actualizo = conexion.actualizarBD("UPDATE financiadores SET posee_logo ='S' WHERE id =" + financiador);
 
 			}
 
@@ -633,6 +561,98 @@ public class AdministrarPublicaciones {
 
 	}
 
+	public void actualizarArchivo(File archivo, String numero, String financiador) {
+
+		Conexion conexion = new Conexion();
+		byte[] array = null;
+
+		try {
+			FileInputStream is = new FileInputStream(archivo);
+
+			// guarda el archivo
+
+			String[][] condiciones = new String[1][2];
+			condiciones[0][0] = "id";
+			condiciones[0][1] = "" + financiador;
+			String[] campos = new String[1];
+			if (numero.equals("1")) {
+				campos[0] = "archivo";
+			} else if (numero.equals("2")) {
+
+				campos[0] = "archivo2";
+			} else {
+				campos[0] = "archivo3";
+
+			}
+
+			Object[] valores = new Object[1];
+			valores[0] = array;
+			boolean oka = conexion.actualizarBD3("financiadores", campos, condiciones, is, (int) archivo.length(), archivo);
+
+			conexion.cerrarConexion();
+
+		} catch (Exception e) {
+
+		}
+
+	}
+	
+	
+	
+	public void guardarArchivoDisco(String directorio_ruta_con_nombre_archivo, byte[] array) {
+
+		if (array != null) {
+			FileOutputStream fileOuputStream = null;
+			try {
+				fileOuputStream = new FileOutputStream(directorio_ruta_con_nombre_archivo);
+				fileOuputStream.write(array);
+			} catch (Exception e) {
+
+			} finally {
+				try {
+					fileOuputStream.close();
+				} catch (IOException e) {
+
+				}
+			}
+		}
+
+	}
+	
+	
+	
+	
+	public Object[] getFinanciador(Integer aId) {
+		Conexion conexion = new Conexion();
+		String sentencia = "SELECT * FROM financiadores a WHERE id ="+aId;
+		Object[] financiador = null;
+		ResultSet rs = conexion.consultarBD(sentencia);
+		try {
+			while (rs.next()) {
+				financiador = new Object[8];
+
+				financiador[0] = rs.getObject(1);
+				financiador[1] = rs.getObject(2);
+				financiador[2] = rs.getObject(3);
+				financiador[3] = rs.getObject(4);
+				financiador[4] = rs.getObject(5);
+				
+				financiador[5] = rs.getBytes(6); //archivo
+				financiador[6] = rs.getBytes(7); //archivo2
+				financiador[7] = rs.getBytes(8); //archivo3
+				
+
+	
+			}
+			rs.close();
+		} catch (SQLException e) {
+			// e.printStackTrace();
+		} finally {
+			conexion.cerrarConexion();
+		}
+		return financiador;
+	}
+
 	public List<Object[]> getFinanciadores() {
 
 		List<Object[]> financiadores = new ArrayList<Object[]>();
@@ -642,13 +662,18 @@ public class AdministrarPublicaciones {
 		ResultSet rs = conexion.consultarBD(sentencia);
 		try {
 			while (rs.next()) {
-				financiador = new Object[5];
+				financiador = new Object[8];
 
 				financiador[0] = rs.getObject(1);
 				financiador[1] = rs.getObject(2);
 				financiador[2] = rs.getObject(3);
 				financiador[3] = rs.getObject(4);
 				financiador[4] = rs.getObject(5);
+				
+				financiador[5] = rs.getBytes(6); //archivo
+				financiador[6] = rs.getBytes(7); //archivo2
+				financiador[7] = rs.getBytes(8); //archivo3
+				
 
 				financiadores.add(financiador);
 			}
@@ -667,9 +692,7 @@ public class AdministrarPublicaciones {
 		int g = 0;
 		boolean actualizo = false;
 
-		actualizo = conexion
-				.actualizarBD("DELETE FROM tipo_certificacion WHERE id="
-						+ Integer.parseInt(idAdministrador));
+		actualizo = conexion.actualizarBD("DELETE FROM tipo_certificacion WHERE id=" + Integer.parseInt(idAdministrador));
 
 		conexion.cerrarConexion();
 		if (actualizo) {
@@ -683,9 +706,7 @@ public class AdministrarPublicaciones {
 		int exito = 0;
 		try {
 
-			boolean actualizo = conexion
-					.actualizarBD("UPDATE tipo_certificacion SET nombre_certificacion='"
-							+ curso.trim() + "' WHERE id=" + id);
+			boolean actualizo = conexion.actualizarBD("UPDATE tipo_certificacion SET nombre_certificacion='" + curso.trim() + "' WHERE id=" + id);
 			if (actualizo) {
 				exito = 1;
 			}
@@ -705,9 +726,7 @@ public class AdministrarPublicaciones {
 		int exito = 0;
 		try {
 
-			boolean actualizo = conexion
-					.actualizarBD("INSERT INTO tipo_certificacion(nombre_certificacion) VALUES('"
-							+ curso.trim() + "')");
+			boolean actualizo = conexion.actualizarBD("INSERT INTO tipo_certificacion(nombre_certificacion) VALUES('" + curso.trim() + "')");
 			if (actualizo) {
 				exito = 1;
 			}
@@ -726,8 +745,7 @@ public class AdministrarPublicaciones {
 
 		List<Object[]> cursos = new ArrayList<Object[]>();
 		Conexion conexion = new Conexion();
-		String sentencia = "   SELECT * FROM tipo_certificacion a"
-				+ " ORDER BY a.nombre_certificacion";
+		String sentencia = "   SELECT * FROM tipo_certificacion a" + " ORDER BY a.nombre_certificacion";
 		Object[] curso = null;
 		ResultSet rs = conexion.consultarBD(sentencia);
 		try {
@@ -751,8 +769,7 @@ public class AdministrarPublicaciones {
 	public Object[] getCursoCompleto(String id) {
 
 		Conexion conexion = new Conexion();
-		String sentencia = "   SELECT *  FROM tipo_certificacion a"
-				+ " WHERE a.id=" + id + " ORDER BY a.nombre_certificacion";
+		String sentencia = "   SELECT *  FROM tipo_certificacion a" + " WHERE a.id=" + id + " ORDER BY a.nombre_certificacion";
 		Object[] curso = null;
 		ResultSet rs = conexion.consultarBD(sentencia);
 		try {
@@ -777,9 +794,7 @@ public class AdministrarPublicaciones {
 		int exito = 0;
 		try {
 
-			boolean actualizo = conexion
-					.actualizarBD("INSERT INTO portafolio(titulo_portafolio,contenido_portafolio) VALUES('"
-							+ titulo + "','" + contenido + "')");
+			boolean actualizo = conexion.actualizarBD("INSERT INTO portafolio(titulo_portafolio,contenido_portafolio) VALUES('" + titulo + "','" + contenido + "')");
 			if (actualizo) {
 				exito = 1;
 			}
@@ -794,8 +809,7 @@ public class AdministrarPublicaciones {
 
 	}
 
-	public int crearAdmin(String pn, String sn, String pa, String sa, int doc,
-			String correo, String clave) {
+	public int crearAdmin(String pn, String sn, String pa, String sa, int doc, String correo, String clave) {
 		Conexion conexion = new Conexion();
 		int exito = 0;
 		try {
@@ -806,9 +820,7 @@ public class AdministrarPublicaciones {
 			String[] parametros = parametro.getarametros();
 			int c = 0;
 
-			ResultSet rs = conexion
-					.consultarBD("SELECT COUNT(*) FROM administradores WHERE documento= "
-							+ doc);
+			ResultSet rs = conexion.consultarBD("SELECT COUNT(*) FROM administradores WHERE documento= " + doc);
 			try {
 				if (rs.next()) {
 					c = rs.getInt(1);
@@ -824,37 +836,7 @@ public class AdministrarPublicaciones {
 
 			if (c == 0) {
 				asunto = "Nueva cuenta en software de certificaciones Isoluciones";
-				mensaje = "<table width='100%' border='0'>"
-						+ "<tr>"
-						+ "<td colspan='2' align='left' valign='middle'><strong>Sistema de informaci&oacute;n de certificaciones - Isoluciones </strong></td>"
-						+ "</tr>"
-						+ "<tr>"
-						+ "<td colspan='2'>&nbsp;</td>"
-						+ "</tr>"
-						+ "<tr>"
-						+ "<td colspan='2'><p>Estimado administrador(a) <strong>"
-						+ pn
-						+ " "
-						+ sn
-						+ " "
-						+ pa
-						+ " "
-						+ sa
-						+ "</strong>, se le ha creado una nueva cuenta en el software de certificaciones de Isoluciones. Le recordamos su nueva contraseña, cámbiela cuando desee desde el menú administrador. La contraseña es: "
-						+ clave
-						+ ".</p>"
-						+ "<p>&nbsp; </p></td>"
-						+ "</tr>"
-						+ "<tr>"
-						+ "<td colspan='2'><span class='Estilo6'>* Puedes visitar nuestro software en cualquier momento dirigi&eacute;ndote a la direcci&oacute;n de internet: <a href='"
-						+ parametros[0]
-						+ "'>"
-						+ parametros[0]
-						+ "</a> &oacute; contactarnos a nuestro correo: "
-						+ parametros[1]
-						+ " </span></td>"
-						+ "</tr>"
-						+ "</table>";
+				mensaje = "<table width='100%' border='0'>" + "<tr>" + "<td colspan='2' align='left' valign='middle'><strong>Sistema de informaci&oacute;n de certificaciones - Isoluciones </strong></td>" + "</tr>" + "<tr>" + "<td colspan='2'>&nbsp;</td>" + "</tr>" + "<tr>" + "<td colspan='2'><p>Estimado administrador(a) <strong>" + pn + " " + sn + " " + pa + " " + sa + "</strong>, se le ha creado una nueva cuenta en el software de certificaciones de Isoluciones. Le recordamos su nueva contraseña, cámbiela cuando desee desde el menú administrador. La contraseña es: " + clave + ".</p>" + "<p>&nbsp; </p></td>" + "</tr>" + "<tr>" + "<td colspan='2'><span class='Estilo6'>* Puedes visitar nuestro software en cualquier momento dirigi&eacute;ndote a la direcci&oacute;n de internet: <a href='" + parametros[0] + "'>" + parametros[0] + "</a> &oacute; contactarnos a nuestro correo: " + parametros[1] + " </span></td>" + "</tr>" + "</table>";
 
 				try {
 					email.enviarEmail(mensaje, asunto, correo);
@@ -863,22 +845,7 @@ public class AdministrarPublicaciones {
 					// e.printStackTrace();
 				}
 
-				boolean actualizo = conexion
-						.actualizarBD("INSERT INTO administradores(primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,documento,clave,correo) VALUES('"
-								+ pn
-								+ "','"
-								+ sn
-								+ "','"
-								+ pa
-								+ "','"
-								+ sa
-								+ "',"
-								+ doc
-								+ ",\""
-								+ clave
-								+ "\",'"
-								+ correo
-								+ "')");
+				boolean actualizo = conexion.actualizarBD("INSERT INTO administradores(primer_nombre,segundo_nombre,primer_apellido,segundo_apellido,documento,clave,correo) VALUES('" + pn + "','" + sn + "','" + pa + "','" + sa + "'," + doc + ",\"" + clave + "\",'" + correo + "')");
 				if (actualizo) {
 					exito = 1;
 				}
@@ -894,8 +861,7 @@ public class AdministrarPublicaciones {
 
 	}
 
-	public int getEnviarNuevaClaveAdmin(String correo, int id, String m,
-			String clave) {
+	public int getEnviarNuevaClaveAdmin(String correo, int id, String m, String clave) {
 		Conexion conexion = new Conexion();
 		int exito = 0;
 		try {
@@ -915,24 +881,7 @@ public class AdministrarPublicaciones {
 				admin.setClave(clave);
 			}
 			asunto = "Nueva clave para el software de certificaciones-Isoluciones";
-			mensaje = "<table width='100%' border='0'>"
-					+ "<tr>"
-					+ "<td colspan='2' align='left' valign='middle'><strong>Sistema de informaci&oacute;n de certificaciones-Isoluciones</strong></td>"
-					+ "</tr>"
-					+ "<tr>"
-					+ "<td colspan='2'>&nbsp;</td>"
-					+ "</tr>"
-					+ "<tr>"
-					+ "<td colspan='2'><p>Estimado administrador(a), se le ha asignado una nueva contraseña. Cámbiela cuando desee. La contraseña es: "
-					+ admin.getClave()
-					+ "</p>"
-					+ "<p>&nbsp; </p></td>"
-					+ "</tr>"
-					+ "<tr>"
-					+ "<td colspan='2'><span class='Estilo6'>* Puedes visitar nuestro software en cualquier momento dirigi&eacute;ndote a la direcci&oacute;n de internet: <a href='"
-					+ parametros[0] + "'>" + parametros[0]
-					+ "</a> &oacute; contactarnos a nuestro correo: "
-					+ parametros[1] + " </span></td></tr>" + "</table>";
+			mensaje = "<table width='100%' border='0'>" + "<tr>" + "<td colspan='2' align='left' valign='middle'><strong>Sistema de informaci&oacute;n de certificaciones-Isoluciones</strong></td>" + "</tr>" + "<tr>" + "<td colspan='2'>&nbsp;</td>" + "</tr>" + "<tr>" + "<td colspan='2'><p>Estimado administrador(a), se le ha asignado una nueva contraseña. Cámbiela cuando desee. La contraseña es: " + admin.getClave() + "</p>" + "<p>&nbsp; </p></td>" + "</tr>" + "<tr>" + "<td colspan='2'><span class='Estilo6'>* Puedes visitar nuestro software en cualquier momento dirigi&eacute;ndote a la direcci&oacute;n de internet: <a href='" + parametros[0] + "'>" + parametros[0] + "</a> &oacute; contactarnos a nuestro correo: " + parametros[1] + " </span></td></tr>" + "</table>";
 
 			try {
 				email.enviarEmail(mensaje, asunto, correo);
@@ -941,10 +890,7 @@ public class AdministrarPublicaciones {
 				// e.printStackTrace();
 			}
 
-			boolean actualizo = conexion
-					.actualizarBD("UPDATE administradores SET clave=(\""
-							+ admin.getClave() + "\") WHERE id_administrador="
-							+ id);
+			boolean actualizo = conexion.actualizarBD("UPDATE administradores SET clave=(\"" + admin.getClave() + "\") WHERE id_administrador=" + id);
 			if (actualizo) {
 				exito = 1;
 			}
@@ -980,9 +926,7 @@ public class AdministrarPublicaciones {
 		conexion.setAutoCommitBD(true);
 		int g = 0;
 		boolean actualizo = false;
-		actualizo = conexion
-				.actualizarBD("DELETE FROM archivos_planos WHERE id_archivo="
-						+ Integer.parseInt(idArchivo));
+		actualizo = conexion.actualizarBD("DELETE FROM archivos_planos WHERE id_archivo=" + Integer.parseInt(idArchivo));
 		// conexion.commitBD();
 		conexion.cerrarConexion();
 		if (actualizo) {
@@ -997,9 +941,7 @@ public class AdministrarPublicaciones {
 		int g = 0;
 		boolean actualizo = false;
 
-		actualizo = conexion
-				.actualizarBD("DELETE FROM portafolio WHERE id_portafolio="
-						+ Integer.parseInt(idPortafolio));
+		actualizo = conexion.actualizarBD("DELETE FROM portafolio WHERE id_portafolio=" + Integer.parseInt(idPortafolio));
 
 		conexion.cerrarConexion();
 		if (actualizo) {
@@ -1014,8 +956,7 @@ public class AdministrarPublicaciones {
 		int g = 0;
 		boolean actualizo = false;
 
-		ResultSet rs = conexion
-				.consultarBD("SELECT COUNT(*) FROM administradores");
+		ResultSet rs = conexion.consultarBD("SELECT COUNT(*) FROM administradores");
 		int c = 0;
 		try {
 			while (rs.next()) {
@@ -1027,9 +968,7 @@ public class AdministrarPublicaciones {
 		}
 
 		if (c > 1) {
-			actualizo = conexion
-					.actualizarBD("DELETE FROM administradores WHERE id_administrador="
-							+ Integer.parseInt(idAdministrador));
+			actualizo = conexion.actualizarBD("DELETE FROM administradores WHERE id_administrador=" + Integer.parseInt(idAdministrador));
 		}
 
 		conexion.cerrarConexion();
@@ -1045,9 +984,7 @@ public class AdministrarPublicaciones {
 		int g = 0;
 		boolean actualizo = false;
 
-		actualizo = conexion
-				.actualizarBD("DELETE FROM certificados WHERE id_certificado="
-						+ Integer.parseInt(id));
+		actualizo = conexion.actualizarBD("DELETE FROM certificados WHERE id_certificado=" + Integer.parseInt(id));
 
 		conexion.cerrarConexion();
 		if (actualizo) {
@@ -1068,9 +1005,7 @@ public class AdministrarPublicaciones {
 		conexion.setAutoCommitBD(true);
 		int g = 0;
 		boolean actualizo = false;
-		actualizo = conexion
-				.actualizarBD("DELETE FROM repositorio_fotos WHERE id_foto="
-						+ Integer.parseInt(idFoto));
+		actualizo = conexion.actualizarBD("DELETE FROM repositorio_fotos WHERE id_foto=" + Integer.parseInt(idFoto));
 		// conexion.commitBD();
 
 		if (actualizo) {
@@ -1081,9 +1016,7 @@ public class AdministrarPublicaciones {
 
 		String sentencia = "";
 
-		sentencia = "SELECT rf.fecha_publicacion, rf.direccion_foto, (eg.primer_nombre||' '|| eg.segundo_nombre|| ' '|| eg.primer_apellido|| ' '|| eg.segundo_apellido) AS nombre, id_foto FROM repositorio_fotos rf, egresados eg WHERE rf.id_egresado = eg.id_egresado"
-				+ " UNION ALL"
-				+ " SELECT rf.fecha_publicacion, rf.direccion_foto, 'ADMINISTRADOR' AS nombre, id_foto FROM repositorio_fotos rf WHERE rf.id_administrador IS NOT NULL AND id_egresado IS NULL";
+		sentencia = "SELECT rf.fecha_publicacion, rf.direccion_foto, (eg.primer_nombre||' '|| eg.segundo_nombre|| ' '|| eg.primer_apellido|| ' '|| eg.segundo_apellido) AS nombre, id_foto FROM repositorio_fotos rf, egresados eg WHERE rf.id_egresado = eg.id_egresado" + " UNION ALL" + " SELECT rf.fecha_publicacion, rf.direccion_foto, 'ADMINISTRADOR' AS nombre, id_foto FROM repositorio_fotos rf WHERE rf.id_administrador IS NOT NULL AND id_egresado IS NULL";
 
 		RepositorioFotos foto2 = null;
 		ResultSet rs = conexion.consultarBD(sentencia);
@@ -1116,15 +1049,10 @@ public class AdministrarPublicaciones {
 
 				if (!f1.exists()) {
 					f1 = new File(ruta + "\\cursos\\" + p.getDireccionFoto());
-					f1.renameTo(new File(ruta + "\\cursos\\T"
-							+ p.getDireccionFoto()));
+					f1.renameTo(new File(ruta + "\\cursos\\T" + p.getDireccionFoto()));
 				}
 
-				actualizo = conexion
-						.actualizarBD("UPDATE repositorio_fotos SET direccion_foto='curso_"
-								+ cuenta
-								+ ".jpg' WHERE id_foto="
-								+ p.getIdFoto());
+				actualizo = conexion.actualizarBD("UPDATE repositorio_fotos SET direccion_foto='curso_" + cuenta + ".jpg' WHERE id_foto=" + p.getIdFoto());
 			}
 
 			cuenta = 0;
@@ -1137,8 +1065,7 @@ public class AdministrarPublicaciones {
 
 				if (!f3.exists()) {
 					f3 = new File(ruta + "\\cursos\\T" + p.getDireccionFoto());
-					f3.renameTo(new File(ruta + "\\cursos\\curso_" + cuenta
-							+ ".jpg"));
+					f3.renameTo(new File(ruta + "\\cursos\\curso_" + cuenta + ".jpg"));
 				}
 
 			}
@@ -1150,18 +1077,14 @@ public class AdministrarPublicaciones {
 		return g;
 	}
 
-	public List<RepositorioFotos> getRepositorioFotosEliminar(
-			String tipoUsuario, String usuario) {
+	public List<RepositorioFotos> getRepositorioFotosEliminar(String tipoUsuario, String usuario) {
 		List<RepositorioFotos> fotos = new ArrayList<RepositorioFotos>();
 		Conexion conexion = new Conexion();
 		String sentencia = "";
 		if (tipoUsuario.equals("1")) {
-			sentencia = "SELECT rf.fecha_publicacion, rf.direccion_foto, (eg.primer_nombre||' '|| eg.segundo_nombre|| ' '|| eg.primer_apellido|| ' '|| eg.segundo_apellido) AS nombre, id_foto FROM repositorio_fotos rf, egresados eg WHERE rf.id_egresado = eg.id_egresado AND eg.id_egresado="
-					+ usuario;
+			sentencia = "SELECT rf.fecha_publicacion, rf.direccion_foto, (eg.primer_nombre||' '|| eg.segundo_nombre|| ' '|| eg.primer_apellido|| ' '|| eg.segundo_apellido) AS nombre, id_foto FROM repositorio_fotos rf, egresados eg WHERE rf.id_egresado = eg.id_egresado AND eg.id_egresado=" + usuario;
 		} else {
-			sentencia = "SELECT rf.fecha_publicacion, rf.direccion_foto, (eg.primer_nombre||' '|| eg.segundo_nombre|| ' '|| eg.primer_apellido|| ' '|| eg.segundo_apellido) AS nombre, id_foto FROM repositorio_fotos rf, egresados eg WHERE rf.id_egresado = eg.id_egresado"
-					+ " UNION ALL"
-					+ " SELECT rf.fecha_publicacion, rf.direccion_foto, 'ADMINISTRADOR' AS nombre, id_foto FROM repositorio_fotos rf WHERE rf.id_administrador IS NOT NULL AND id_egresado IS NULL";
+			sentencia = "SELECT rf.fecha_publicacion, rf.direccion_foto, (eg.primer_nombre||' '|| eg.segundo_nombre|| ' '|| eg.primer_apellido|| ' '|| eg.segundo_apellido) AS nombre, id_foto FROM repositorio_fotos rf, egresados eg WHERE rf.id_egresado = eg.id_egresado" + " UNION ALL" + " SELECT rf.fecha_publicacion, rf.direccion_foto, 'ADMINISTRADOR' AS nombre, id_foto FROM repositorio_fotos rf WHERE rf.id_administrador IS NOT NULL AND id_egresado IS NULL";
 		}
 		RepositorioFotos foto = null;
 		ResultSet rs = conexion.consultarBD(sentencia);
@@ -1187,9 +1110,7 @@ public class AdministrarPublicaciones {
 	public List<RepositorioFotos> getRepositorioFotos() {
 		List<RepositorioFotos> fotos = new ArrayList<RepositorioFotos>();
 		Conexion conexion = new Conexion();
-		String sentencia = "SELECT rf.fecha_publicacion, rf.direccion_foto, (eg.primer_nombre||' '|| eg.segundo_nombre|| ' '|| eg.primer_apellido|| ' '|| eg.segundo_apellido) AS nombre FROM repositorio_fotos rf, egresados eg WHERE rf.id_egresado = eg.id_egresado"
-				+ " UNION ALL"
-				+ " SELECT rf.fecha_publicacion, rf.direccion_foto, 'ADMINISTRADOR' AS nombre FROM repositorio_fotos rf WHERE rf.id_administrador IS NOT NULL AND id_egresado IS NULL";
+		String sentencia = "SELECT rf.fecha_publicacion, rf.direccion_foto, (eg.primer_nombre||' '|| eg.segundo_nombre|| ' '|| eg.primer_apellido|| ' '|| eg.segundo_apellido) AS nombre FROM repositorio_fotos rf, egresados eg WHERE rf.id_egresado = eg.id_egresado" + " UNION ALL" + " SELECT rf.fecha_publicacion, rf.direccion_foto, 'ADMINISTRADOR' AS nombre FROM repositorio_fotos rf WHERE rf.id_administrador IS NOT NULL AND id_egresado IS NULL";
 		RepositorioFotos foto = null;
 		ResultSet rs = conexion.consultarBD(sentencia);
 		int c = 0;
@@ -1215,13 +1136,7 @@ public class AdministrarPublicaciones {
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 		int g = 0;
 		boolean actualizo = false;
-		actualizo = conexion
-				.actualizarBD("INSERT INTO archivos_planos(archivo, id_administrador, fecha) VALUES('"
-						+ archivo
-						+ "',"
-						+ usuario
-						+ ",'"
-						+ formato.format(new Date()) + "' )");
+		actualizo = conexion.actualizarBD("INSERT INTO archivos_planos(archivo, id_administrador, fecha) VALUES('" + archivo + "'," + usuario + ",'" + formato.format(new Date()) + "' )");
 		conexion.cerrarConexion();
 		if (actualizo) {
 			g = 1;
@@ -1230,16 +1145,13 @@ public class AdministrarPublicaciones {
 
 	}
 
-	public int guardarRepositorio(String tipoEgresado, String usuario,
-			String foto) {
+	public int guardarRepositorio(String tipoEgresado, String usuario, String foto) {
 		Conexion conexion = new Conexion();
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 		int g = 0;
 		boolean actualizo = false;
 
-		actualizo = conexion
-				.actualizarBD("INSERT INTO repositorio_fotos(direccion_foto, id_administrador, fecha_publicacion) VALUES('"
-						+ foto + "',1,'" + formato.format(new Date()) + "')");
+		actualizo = conexion.actualizarBD("INSERT INTO repositorio_fotos(direccion_foto, id_administrador, fecha_publicacion) VALUES('" + foto + "',1,'" + formato.format(new Date()) + "')");
 
 		if (actualizo) {
 			g = 1;
@@ -1249,9 +1161,7 @@ public class AdministrarPublicaciones {
 
 		String sentencia = "";
 
-		sentencia = "SELECT rf.fecha_publicacion, rf.direccion_foto, (eg.primer_nombre||' '|| eg.segundo_nombre|| ' '|| eg.primer_apellido|| ' '|| eg.segundo_apellido) AS nombre, id_foto FROM repositorio_fotos rf, egresados eg WHERE rf.id_egresado = eg.id_egresado"
-				+ " UNION ALL"
-				+ " SELECT rf.fecha_publicacion, rf.direccion_foto, 'ADMINISTRADOR' AS nombre, id_foto FROM repositorio_fotos rf WHERE rf.id_administrador IS NOT NULL AND id_egresado IS NULL";
+		sentencia = "SELECT rf.fecha_publicacion, rf.direccion_foto, (eg.primer_nombre||' '|| eg.segundo_nombre|| ' '|| eg.primer_apellido|| ' '|| eg.segundo_apellido) AS nombre, id_foto FROM repositorio_fotos rf, egresados eg WHERE rf.id_egresado = eg.id_egresado" + " UNION ALL" + " SELECT rf.fecha_publicacion, rf.direccion_foto, 'ADMINISTRADOR' AS nombre, id_foto FROM repositorio_fotos rf WHERE rf.id_administrador IS NOT NULL AND id_egresado IS NULL";
 
 		RepositorioFotos foto2 = null;
 		ResultSet rs = conexion.consultarBD(sentencia);
@@ -1278,11 +1188,7 @@ public class AdministrarPublicaciones {
 				actualizo = false;
 				cuenta++;
 				g = cuenta;
-				actualizo = conexion
-						.actualizarBD("UPDATE repositorio_fotos SET direccion_foto='curso_"
-								+ cuenta
-								+ ".jpg' WHERE id_foto="
-								+ p.getIdFoto());
+				actualizo = conexion.actualizarBD("UPDATE repositorio_fotos SET direccion_foto='curso_" + cuenta + ".jpg' WHERE id_foto=" + p.getIdFoto());
 			}
 
 		}
@@ -1293,21 +1199,17 @@ public class AdministrarPublicaciones {
 
 	}
 
-	public int guardarCertificado(String[][] datos, int longitud)
-			throws Exception {
+	public int guardarCertificado(String[][] datos, int longitud) throws Exception {
 		Conexion conexion = new Conexion();
 
 		String[] fechaPartida = datos[0][5].split("-");
 
-		String base = "RCA/" + fechaPartida[2] + "" + fechaPartida[1] + ""
-				+ fechaPartida[0];
+		String base = "RCA/" + fechaPartida[2] + "" + fechaPartida[1] + "" + fechaPartida[0];
 
 		String sartaConsecutivo = "";
 
 		int maximo = 0;
-		ResultSet rs = conexion
-				.consultarBD("SELECT MAX(consecutivo) FROM certificados WHERE fecha_inicio= '"
-						+ datos[0][5] + "'");
+		ResultSet rs = conexion.consultarBD("SELECT MAX(consecutivo) FROM certificados WHERE fecha_inicio= '" + datos[0][5] + "'");
 
 		try {
 			if (rs.next()) {
@@ -1327,60 +1229,11 @@ public class AdministrarPublicaciones {
 
 			sartaConsecutivo = base + maximo;
 
-			if (datos[i][10] == null
-					|| (datos[i][10] != null && ("" + datos[i][10]).trim()
-							.equals(""))) {
-				conexion.actualizarBD("INSERT INTO certificados(tipo_documento,documento,correo,nombre_completo,fecha_inicio,etiqueta,fecha_disponibilidad,tipo_certificado,ciudad_depto_curso,numero_horas,consecutivo,consecutivo_completo,empresa_proveniente, posee_capacitador, capacitador, cargo_capacitador, empresa_capacitador) VALUES ('"
-						+ datos[i][9]
-						+ "','"
-						+ datos[i][2]
-						+ "','"
-						+ datos[i][1]
-						+ "','"
-						+ datos[i][6]
-						+ "','"
-						+ datos[i][5]
-						+ "','"
-						+ datos[i][4]
-						+ "','"
-						+ datos[i][3]
-						+ "','"
-						+ datos[i][8]
-						+ "','"
-						+ datos[i][0]
-						+ "','"
-						+ datos[i][7]
-						+ "','"
-						+ maximo
-						+ "','" + sartaConsecutivo + "','"+datos[i][11]+"','"+datos[i][12]+"','"+datos[i][13]+"','"+datos[i][14]+"','"+datos[i][15]+"')");
+			if (datos[i][10] == null || (datos[i][10] != null && ("" + datos[i][10]).trim().equals(""))) {
+				conexion.actualizarBD("INSERT INTO certificados(tipo_documento,documento,correo,nombre_completo,fecha_inicio,etiqueta,fecha_disponibilidad,tipo_certificado,ciudad_depto_curso,numero_horas,consecutivo,consecutivo_completo,empresa_proveniente, posee_capacitador, capacitador, cargo_capacitador, empresa_capacitador) VALUES ('" + datos[i][9] + "','" + datos[i][2] + "','" + datos[i][1] + "','" + datos[i][6] + "','" + datos[i][5] + "','" + datos[i][4] + "','" + datos[i][3] + "','" + datos[i][8] + "','" + datos[i][0] + "','" + datos[i][7] + "','" + maximo + "','" + sartaConsecutivo + "','" + datos[i][11] + "','" + datos[i][12] + "','" + datos[i][13] + "','" + datos[i][14] + "','" + datos[i][15] + "')");
 			} else {
 
-				conexion.actualizarBD("INSERT INTO certificados(tipo_documento,documento,correo,nombre_completo,fecha_inicio,etiqueta,fecha_disponibilidad,tipo_certificado,ciudad_depto_curso,numero_horas,id_cliente,consecutivo,consecutivo_completo,empresa_proveniente, posee_capacitador, capacitador, cargo_capacitador, empresa_capacitador) VALUES ('"
-						+ datos[i][9]
-						+ "','"
-						+ datos[i][2]
-						+ "','"
-						+ datos[i][1]
-						+ "','"
-						+ datos[i][6]
-						+ "','"
-						+ datos[i][5]
-						+ "','"
-						+ datos[i][4]
-						+ "','"
-						+ datos[i][3]
-						+ "','"
-						+ datos[i][8]
-						+ "','"
-						+ datos[i][0]
-						+ "','"
-						+ datos[i][7]
-						+ "','"
-						+ datos[i][10]
-						+ "','"
-						+ maximo
-						+ "','"
-						+ sartaConsecutivo + "','"+datos[i][11]+"','"+datos[i][12]+"','"+datos[i][13]+"','"+datos[i][14]+"','"+datos[i][15]+"')");
+				conexion.actualizarBD("INSERT INTO certificados(tipo_documento,documento,correo,nombre_completo,fecha_inicio,etiqueta,fecha_disponibilidad,tipo_certificado,ciudad_depto_curso,numero_horas,id_cliente,consecutivo,consecutivo_completo,empresa_proveniente, posee_capacitador, capacitador, cargo_capacitador, empresa_capacitador) VALUES ('" + datos[i][9] + "','" + datos[i][2] + "','" + datos[i][1] + "','" + datos[i][6] + "','" + datos[i][5] + "','" + datos[i][4] + "','" + datos[i][3] + "','" + datos[i][8] + "','" + datos[i][0] + "','" + datos[i][7] + "','" + datos[i][10] + "','" + maximo + "','" + sartaConsecutivo + "','" + datos[i][11] + "','" + datos[i][12] + "','" + datos[i][13] + "','" + datos[i][14] + "','" + datos[i][15] + "')");
 
 			}
 
@@ -1394,8 +1247,7 @@ public class AdministrarPublicaciones {
 
 	}
 
-	public int guardarSeccion(String titulo, String contenido, String foto,
-			String receptor) throws Exception {
+	public int guardarSeccion(String titulo, String contenido, String foto, String receptor) throws Exception {
 		Conexion conexion = new Conexion();
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 		int g = 0;
@@ -1403,12 +1255,7 @@ public class AdministrarPublicaciones {
 		if (foto == null || foto.equals("null")) {
 			foto = "";
 		}
-		actualizo = conexion
-				.actualizarBD("UPDATE secciones SET titulo_seccion = '"
-						+ titulo + "',  direccion_foto_seccion = '" + foto
-						+ "', fecha = '" + formato.format(new Date())
-						+ "', contenido_seccion ='" + contenido
-						+ "' WHERE id_seccion =" + Integer.parseInt(receptor));
+		actualizo = conexion.actualizarBD("UPDATE secciones SET titulo_seccion = '" + titulo + "',  direccion_foto_seccion = '" + foto + "', fecha = '" + formato.format(new Date()) + "', contenido_seccion ='" + contenido + "' WHERE id_seccion =" + Integer.parseInt(receptor));
 
 		if (actualizo) {
 			g = 1;
@@ -1418,9 +1265,7 @@ public class AdministrarPublicaciones {
 
 	}
 
-	public int guardarPublicacion(int tipoUsuario, int administrador,
-			int egresado, int privacidad, String titulo, String contenido,
-			String foto, String receptor) throws Exception {
+	public int guardarPublicacion(int tipoUsuario, int administrador, int egresado, int privacidad, String titulo, String contenido, String foto, String receptor) throws Exception {
 		Conexion conexion = new Conexion();
 		SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
 		int g = 0;
@@ -1443,9 +1288,7 @@ public class AdministrarPublicaciones {
 		objeto[5] = receptor;
 		objeto[6] = formato.format(new Date());
 
-		String[] campos = { "id_administrador", "privacidad_publicacion",
-				"titulo_publicacion", "contenido_publicacion",
-				"direccion_foto_publicacion", "receptor", "fecha" };
+		String[] campos = { "id_administrador", "privacidad_publicacion", "titulo_publicacion", "contenido_publicacion", "direccion_foto_publicacion", "receptor", "fecha" };
 
 		actualizo = conexion.insertarBD2("publicaciones", campos, objeto);
 
@@ -1461,9 +1304,7 @@ public class AdministrarPublicaciones {
 		Conexion conexion = new Conexion();
 		boolean actualizo = false;
 		int g = 0;
-		actualizo = conexion
-				.actualizarBD("DELETE FROM publicaciones WHERE id_publicacion='"
-						+ aIdPublicacion + "'");
+		actualizo = conexion.actualizarBD("DELETE FROM publicaciones WHERE id_publicacion='" + aIdPublicacion + "'");
 
 		conexion.cerrarConexion();
 		if (actualizo) {
@@ -1476,11 +1317,7 @@ public class AdministrarPublicaciones {
 	public List<Publicacion> getPublicaciones(int aEgresado) {
 		List<Publicacion> publicaciones = new ArrayList<Publicacion>();
 		Conexion conexion = new Conexion();
-		String sentencia = "SELECT pu.id_publicacion, pu.id_egresado, id_administrador, (eg.primer_nombre||' '|| eg.segundo_nombre|| ' '|| eg.primer_apellido|| ' '|| eg.segundo_apellido) AS nombre, fecha, titulo_publicacion, contenido_publicacion, direccion_foto_publicacion, privacidad_publicacion  FROM publicaciones pu LEFT JOIN egresados eg  ON  pu.id_egresado = eg.id_egresado WHERE privacidad_publicacion = 1 UNION ALL"
-				+ " SELECT pu.id_publicacion, pu.id_egresado, id_administrador, (eg.primer_nombre||' '|| eg.segundo_nombre|| ' '|| eg.primer_apellido|| ' '|| eg.segundo_apellido) AS nombre, fecha, titulo_publicacion, contenido_publicacion, direccion_foto_publicacion, privacidad_publicacion FROM publicaciones pu, egresados eg WHERE privacidad_publicacion =3 AND receptor = "
-				+ aEgresado
-				+ " AND pu.id_egresado = eg.id_egresado"
-				+ " ORDER BY fecha DESC, id_publicacion DESC FIRST 10";
+		String sentencia = "SELECT pu.id_publicacion, pu.id_egresado, id_administrador, (eg.primer_nombre||' '|| eg.segundo_nombre|| ' '|| eg.primer_apellido|| ' '|| eg.segundo_apellido) AS nombre, fecha, titulo_publicacion, contenido_publicacion, direccion_foto_publicacion, privacidad_publicacion  FROM publicaciones pu LEFT JOIN egresados eg  ON  pu.id_egresado = eg.id_egresado WHERE privacidad_publicacion = 1 UNION ALL" + " SELECT pu.id_publicacion, pu.id_egresado, id_administrador, (eg.primer_nombre||' '|| eg.segundo_nombre|| ' '|| eg.primer_apellido|| ' '|| eg.segundo_apellido) AS nombre, fecha, titulo_publicacion, contenido_publicacion, direccion_foto_publicacion, privacidad_publicacion FROM publicaciones pu, egresados eg WHERE privacidad_publicacion =3 AND receptor = " + aEgresado + " AND pu.id_egresado = eg.id_egresado" + " ORDER BY fecha DESC, id_publicacion DESC FIRST 10";
 		Publicacion publicacion = null;
 		ResultSet rs = conexion.consultarBD(sentencia);
 		int c = 0;
@@ -1497,8 +1334,7 @@ public class AdministrarPublicaciones {
 
 				publicacion.setPrivacidadPublicacion(rs.getInt(9));
 
-				if (rs.getString(8) == null
-						|| rs.getString(8).trim().equals("")) {
+				if (rs.getString(8) == null || rs.getString(8).trim().equals("")) {
 					c++;
 					// publicacion.setDireccionFotoPublicacion("sinImagen" + c +
 					// ".jpg");
@@ -1526,17 +1362,14 @@ public class AdministrarPublicaciones {
 		return publicaciones;
 	}
 
-	public List<Publicacion> getPublicacionesEgresado(int aEgresado,
-			int tipoUsuario) {
+	public List<Publicacion> getPublicacionesEgresado(int aEgresado, int tipoUsuario) {
 		List<Publicacion> publicaciones = new ArrayList<Publicacion>();
 		Conexion conexion = new Conexion();
 		String sentencia = "";
 		if (tipoUsuario == 2) {
 			sentencia = "SELECT pu.id_publicacion, pu.id_egresado, id_administrador, (eg.primer_nombre||' '|| eg.segundo_nombre|| ' '|| eg.primer_apellido|| ' '|| eg.segundo_apellido) AS nombre, fecha, titulo_publicacion, contenido_publicacion, direccion_foto_publicacion, privacidad_publicacion  FROM publicaciones pu, egresados eg  WHERE  pu.id_egresado = eg.id_egresado AND (receptor IS NULL OR receptor = 0) ORDER BY fecha DESC, id_publicacion DESC";
 		} else {
-			sentencia = "SELECT pu.id_publicacion, pu.id_egresado, id_administrador, (eg.primer_nombre||' '|| eg.segundo_nombre|| ' '|| eg.primer_apellido|| ' '|| eg.segundo_apellido) AS nombre, fecha, titulo_publicacion, contenido_publicacion, direccion_foto_publicacion, privacidad_publicacion  FROM publicaciones pu, egresados eg  WHERE  pu.id_egresado = eg.id_egresado AND eg.id_egresado="
-					+ aEgresado
-					+ " ORDER BY fecha DESC, id_publicacion DESC FIRST 10";
+			sentencia = "SELECT pu.id_publicacion, pu.id_egresado, id_administrador, (eg.primer_nombre||' '|| eg.segundo_nombre|| ' '|| eg.primer_apellido|| ' '|| eg.segundo_apellido) AS nombre, fecha, titulo_publicacion, contenido_publicacion, direccion_foto_publicacion, privacidad_publicacion  FROM publicaciones pu, egresados eg  WHERE  pu.id_egresado = eg.id_egresado AND eg.id_egresado=" + aEgresado + " ORDER BY fecha DESC, id_publicacion DESC FIRST 10";
 		}
 		Publicacion publicacion = null;
 		ResultSet rs = conexion.consultarBD(sentencia);
@@ -1554,8 +1387,7 @@ public class AdministrarPublicaciones {
 
 				publicacion.setPrivacidadPublicacion(rs.getInt(9));
 
-				if (rs.getString(8) == null
-						|| rs.getString(8).trim().equals("")) {
+				if (rs.getString(8) == null || rs.getString(8).trim().equals("")) {
 					c++;
 					// publicacion.setDireccionFotoPublicacion("sinImagen" + c +
 					// ".jpg");
@@ -1580,8 +1412,7 @@ public class AdministrarPublicaciones {
 
 	public Publicacion getNotaPublica(int id) {
 		Conexion conexion = new Conexion();
-		String sentencia = "SELECT pu.id_publicacion, pu.id_egresado, id_administrador, (eg.primer_nombre||' '|| eg.segundo_nombre|| ' '|| eg.primer_apellido|| ' '|| eg.segundo_apellido) AS nombre, fecha, titulo_publicacion, contenido_publicacion, direccion_foto_publicacion, privacidad_publicacion  FROM publicaciones pu LEFT JOIN egresados eg ON pu.id_egresado = eg.id_egresado WHERE privacidad_publicacion = 2 AND pu.id_publicacion="
-				+ id;
+		String sentencia = "SELECT pu.id_publicacion, pu.id_egresado, id_administrador, (eg.primer_nombre||' '|| eg.segundo_nombre|| ' '|| eg.primer_apellido|| ' '|| eg.segundo_apellido) AS nombre, fecha, titulo_publicacion, contenido_publicacion, direccion_foto_publicacion, privacidad_publicacion  FROM publicaciones pu LEFT JOIN egresados eg ON pu.id_egresado = eg.id_egresado WHERE privacidad_publicacion = 2 AND pu.id_publicacion=" + id;
 		Publicacion publicacion = new Publicacion();
 		ResultSet rs = conexion.consultarBD(sentencia);
 		int c = 0;
@@ -1598,8 +1429,7 @@ public class AdministrarPublicaciones {
 
 				publicacion.setPrivacidadPublicacion(rs.getInt(9));
 
-				if (rs.getString(8) == null
-						|| rs.getString(8).trim().equals("")) {
+				if (rs.getString(8) == null || rs.getString(8).trim().equals("")) {
 					c++;
 					// publicacion.setDireccionFotoPublicacion("sinImagen" + c +
 					// ".jpg");
@@ -1660,8 +1490,7 @@ public class AdministrarPublicaciones {
 				seccion.setTitulo(rs.getString(2));
 				seccion.setContenido(rs.getString(3));
 
-				if (rs.getString(4) == null
-						|| rs.getString(4).trim().equals("")) {
+				if (rs.getString(4) == null || rs.getString(4).trim().equals("")) {
 
 				} else {
 					seccion.setDireccionFoto(rs.getString(4));
@@ -1694,8 +1523,7 @@ public class AdministrarPublicaciones {
 				seccion.setTitulo(rs.getString(2));
 				seccion.setContenido(rs.getString(3));
 
-				if (rs.getString(4) == null
-						|| rs.getString(4).trim().equals("")) {
+				if (rs.getString(4) == null || rs.getString(4).trim().equals("")) {
 
 				} else {
 					seccion.setDireccionFoto(rs.getString(4));
@@ -1735,8 +1563,7 @@ public class AdministrarPublicaciones {
 
 				publicacion.setPrivacidadPublicacion(rs.getInt(9));
 
-				if (rs.getString(8) == null
-						|| rs.getString(8).trim().equals("")) {
+				if (rs.getString(8) == null || rs.getString(8).trim().equals("")) {
 					c++;
 					// publicacion.setDireccionFotoPublicacion("sinImagen" + c +
 					// ".jpg");
@@ -1862,13 +1689,11 @@ public class AdministrarPublicaciones {
 		return administradores;
 	}
 
-	public List<Certificado> getCertificados(String tipoCertificado,
-			String documento, String nombre, String fechaI, String fechaF,
-			String consecutivo, String cliente) {
+	public List<Certificado> getCertificados(String tipoCertificado, String documento, String nombre, String fechaI, String fechaF, String consecutivo, String cliente) {
 		List<Certificado> certificados = new ArrayList<Certificado>();
 		Certificado certificado = null;
 		Conexion conexion = new Conexion();
-		String sentencia = "SELECT c .* , t.nombre_certificacion, f.nombre nombre_cliente, posee_logo, posee_logo2, posee_logo3, posee_capacitador, capacitador, cargo_capacitador, empresa_capacitador FROM certificados c INNER JOIN tipo_certificacion t ON c.tipo_certificado = t.id LEFT JOIN financiadores f ON c.id_cliente = f.id WHERE 1=1";
+		String sentencia = "SELECT c .* , t.nombre_certificacion, f.nombre nombre_cliente, posee_logo, posee_logo2, posee_logo3, posee_capacitador, capacitador, cargo_capacitador, empresa_capacitador, archivo, archivo2, archivo3 FROM certificados c INNER JOIN tipo_certificacion t ON c.tipo_certificado = t.id LEFT JOIN financiadores f ON c.id_cliente = f.id WHERE 1=1";
 
 		if (tipoCertificado != null && !tipoCertificado.trim().equals("0")) {
 
@@ -1887,14 +1712,12 @@ public class AdministrarPublicaciones {
 
 		if (nombre != null && !nombre.trim().equals("")) {
 
-			sentencia += " AND UPPER(c.nombre_completo) LIKE '%"
-					+ nombre.trim().toUpperCase() + "%'";
+			sentencia += " AND UPPER(c.nombre_completo) LIKE '%" + nombre.trim().toUpperCase() + "%'";
 		}
 
 		if (consecutivo != null && !consecutivo.trim().equals("")) {
 
-			sentencia += " AND UPPER(c.consecutivo_completo) LIKE '%"
-					+ consecutivo.trim().toUpperCase() + "%'";
+			sentencia += " AND UPPER(c.consecutivo_completo) LIKE '%" + consecutivo.trim().toUpperCase() + "%'";
 		}
 
 		if (fechaI != null && !fechaI.trim().equals("")) {
@@ -1913,18 +1736,15 @@ public class AdministrarPublicaciones {
 		try {
 			while (rs.next()) {
 				certificado = new Certificado();
-				certificado.setCiudadDepartamentoCurso(rs
-						.getString("ciudad_depto_curso"));
+				certificado.setCiudadDepartamentoCurso(rs.getString("ciudad_depto_curso"));
 				certificado.setCiudadDocumento(rs.getString("correo"));
 				certificado.setDocumento(rs.getLong("documento"));
-				certificado.setFechaDisponibilidad(rs
-						.getString("fecha_disponibilidad"));
+				certificado.setFechaDisponibilidad(rs.getString("fecha_disponibilidad"));
 				certificado.setFechaFin(rs.getString("etiqueta"));
 				certificado.setFechaInicio(rs.getString("fecha_inicio"));
 				certificado.setId(rs.getInt("id_certificado"));
 				certificado.setNombre(rs.getString("nombre_completo"));
-				certificado.setTipoCertificado(rs
-						.getString("nombre_certificacion"));
+				certificado.setTipoCertificado(rs.getString("nombre_certificacion"));
 				certificado.setTipoDocumento(rs.getString("tipo_documento"));
 				certificado.setNumeroHoras(rs.getInt("numero_horas"));
 				certificado.setIdCliente(rs.getString("id_cliente"));
@@ -1933,17 +1753,18 @@ public class AdministrarPublicaciones {
 
 				certificado.setNombreCliente(rs.getString("nombre_cliente"));
 
-				certificado.setConsecutivoCompleto(rs
-						.getString("consecutivo_completo"));
+				certificado.setConsecutivoCompleto(rs.getString("consecutivo_completo"));
 
 				certificado.setPoseeLogo1(rs.getString("posee_logo"));
 				certificado.setPoseeLogo2(rs.getString("posee_logo2"));
 				certificado.setPoseeLogo3(rs.getString("posee_logo3"));
 				
-				
+				certificado.setArchivo(rs.getBytes("archivo"));
+				certificado.setArchivo2(rs.getBytes("archivo2"));
+				certificado.setArchivo3(rs.getBytes("archivo3"));
+
 				certificado.setEmpresaProviene(rs.getString("empresa_proveniente"));
-				
-				
+
 				certificado.setPoseeCapacitador(rs.getString("posee_capacitador"));
 				certificado.setCapacitador(rs.getString("capacitador"));
 				certificado.setCargoCapacitador(rs.getString("cargo_capacitador"));
@@ -1964,25 +1785,21 @@ public class AdministrarPublicaciones {
 	public Certificado getCertificado(int id) {
 		Certificado certificado = null;
 		Conexion conexion = new Conexion();
-		String sentencia = "SELECT c .* , t.nombre_certificacion, posee_logo, posee_logo2, posee_logo3, posee_capacitador, capacitador, cargo_capacitador, empresa_capacitador FROM certificados c INNER JOIN tipo_certificacion t ON c.tipo_certificado = t.id LEFT JOIN financiadores f ON c.id_cliente=f.id   WHERE c.id_certificado ="
-				+ id;
+		String sentencia = "SELECT c .* , t.nombre_certificacion, posee_logo, posee_logo2, posee_logo3, posee_capacitador, capacitador, cargo_capacitador, empresa_capacitador, archivo, archivo2, archivo3 FROM certificados c INNER JOIN tipo_certificacion t ON c.tipo_certificado = t.id LEFT JOIN financiadores f ON c.id_cliente=f.id   WHERE c.id_certificado =" + id;
 
 		ResultSet rs = conexion.consultarBD(sentencia);
 		try {
 			while (rs.next()) {
 				certificado = new Certificado();
-				certificado.setCiudadDepartamentoCurso(rs
-						.getString("ciudad_depto_curso"));
+				certificado.setCiudadDepartamentoCurso(rs.getString("ciudad_depto_curso"));
 				certificado.setCiudadDocumento(rs.getString("correo"));
 				certificado.setDocumento(rs.getLong("documento"));
-				certificado.setFechaDisponibilidad(rs
-						.getString("fecha_disponibilidad"));
+				certificado.setFechaDisponibilidad(rs.getString("fecha_disponibilidad"));
 				certificado.setFechaFin(rs.getString("etiqueta"));
 				certificado.setFechaInicio(rs.getString("fecha_inicio"));
 				certificado.setId(rs.getInt("id_certificado"));
 				certificado.setNombre(rs.getString("nombre_completo"));
-				certificado.setTipoCertificado(rs
-						.getString("nombre_certificacion"));
+				certificado.setTipoCertificado(rs.getString("nombre_certificacion"));
 				certificado.setTipoDocumento(rs.getString("tipo_documento"));
 				certificado.setNumeroHoras(rs.getInt("numero_horas"));
 				certificado.setIdCliente(rs.getString("id_cliente"));
@@ -1990,12 +1807,16 @@ public class AdministrarPublicaciones {
 				certificado.setPoseeLogo1(rs.getString("posee_logo"));
 				certificado.setPoseeLogo2(rs.getString("posee_logo2"));
 				certificado.setPoseeLogo3(rs.getString("posee_logo3"));
+				
+				//nuevo
+				certificado.setArchivo(rs.getBytes("archivo"));
+				certificado.setArchivo2(rs.getBytes("archivo2"));
+				certificado.setArchivo3(rs.getBytes("archivo3"));
 
-				certificado.setConsecutivoCompleto(rs
-						.getString("consecutivo_completo"));
-				
+				certificado.setConsecutivoCompleto(rs.getString("consecutivo_completo"));
+
 				certificado.setEmpresaProviene(rs.getString("empresa_proveniente"));
-				
+
 				certificado.setPoseeCapacitador(rs.getString("posee_capacitador"));
 				certificado.setCapacitador(rs.getString("capacitador"));
 				certificado.setCargoCapacitador(rs.getString("cargo_capacitador"));

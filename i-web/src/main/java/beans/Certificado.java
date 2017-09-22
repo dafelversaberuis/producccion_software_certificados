@@ -38,6 +38,10 @@ public class Certificado {
 	private String firma1;
 	private String firma2;
 	
+	private byte[] archivo;
+	private byte[] archivo2;
+	private byte[] archivo3;
+	
 
 	public int getId() {
 		return id;
@@ -270,6 +274,32 @@ public class Certificado {
 	public void setFirma2(String firma2) {
 		this.firma2 = firma2;
 	}
+
+	public byte[] getArchivo() {
+		return archivo;
+	}
+
+	public void setArchivo(byte[] archivo) {
+		this.archivo = archivo;
+	}
+
+	public byte[] getArchivo2() {
+		return archivo2;
+	}
+
+	public void setArchivo2(byte[] archivo2) {
+		this.archivo2 = archivo2;
+	}
+
+	public byte[] getArchivo3() {
+		return archivo3;
+	}
+
+	public void setArchivo3(byte[] archivo3) {
+		this.archivo3 = archivo3;
+	}
+	
+	
 	
 	
 

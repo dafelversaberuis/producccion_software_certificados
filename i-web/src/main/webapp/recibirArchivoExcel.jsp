@@ -130,7 +130,7 @@ if(sarta!=null && sarta.equals("ok2")){
 %>
 <script>alert('Archivo EXCEL cargado con éxito, se cerrará la ventana. Si esto no sucede haga clic en el botón cerrar'); 
 try{
-	window.opener.document.form1.submit();
+	  window.opener.document.form1.submit();
 	
 }catch(e) {
 	//alert('La ventana desde la que se abrió ésta, fue cerrada. La foto se cargó, pero para visualizarla abra la ventana repositorio de fotos nuevamente');
@@ -209,6 +209,7 @@ background-color: #AFDBF6;
 <p />
 <form name="form1">
 <%
+//out.println(ciudad_curso);
 	if (guardo == 1) {
 %>
 <center><strong>Cierre la ventana para continuar</strong><br />
