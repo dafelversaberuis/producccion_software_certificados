@@ -29,7 +29,7 @@ public class Parametro {
 		String[] parametros = new String[6];
 
 		// dirección web del portal(ojo sin / al final tanto linux como windows)
-		parametros[0] = "http://isolucionescertificados.com";
+		parametros[0] = "http://certificadosisoluciones.com";
 
 		// correo uis del portal egresados EISI UIS parametros[1] =
 		parametros[1] = "directorcomercial@isolucionesltda.com";   //multiemergenciassas@gmail.com  //jefenixon.zambrano@gmail.com
